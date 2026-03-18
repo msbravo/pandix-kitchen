@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque 1 — ¿Cómo funciona una computadora?</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:    #FF6B9D;
+  --yellow:  #FFD93D;
+  --mint:    #6BCB77;
+  --sky:     #4ECDC4;
+  --orange:  #FF9F43;
+  --purple:  #A29BFE;
+  --red:     #FF6B6B;
+  --blue:    #74B9FF;
+  --bg:      #FFF8F0;
+  --white:   #FFFFFF;
+  --dark:    #2D3436;
+  --text:    #3D3D3D;
+  --muted:   #999;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255,107,157,0.07) 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(78,205,196,0.07) 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(255,217,61,0.06) 0%, transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(162,155,254,0.06) 0%, transparent 35%);
+}
+
+/* NAV */
+nav {
+  position:sticky; top:0; z-index:200;
+  background:var(--white); border-bottom:3px solid var(--yellow);
+  padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between;
+  height:60px; box-shadow:0 4px 0 rgba(255,217,61,0.15);
+}
+.nav-brand { font-family:'Fredoka One',cursive; font-size:1.1rem; color:var(--pink); display:flex; align-items:center; gap:8px; }
+.nav-pills  { display:flex; gap:6px; }
+.nav-pill {
+  font-family:'Nunito',sans-serif; font-weight:700; font-size:13px;
+  padding:6px 14px; border-radius:50px; border:2.5px solid transparent;
+  cursor:pointer; background:transparent; color:var(--muted); transition:all 0.2s;
+}
+.nav-pill:hover  { background:#FFF0F6; color:var(--pink); border-color:var(--pink); }
+.nav-pill.active { background:var(--pink); color:white; border-color:var(--pink); }
+
+/* HERO */
+.hero {
+  position:relative; z-index:1;
+  padding:4rem 2rem 2.5rem; max-width:900px; margin:0 auto; text-align:center;
+}
+.hero-badge {
+  display:inline-block; background:var(--yellow); color:var(--dark);
+  font-weight:800; font-size:12px; border-radius:50px; padding:5px 16px;
+  margin-bottom:1.2rem; letter-spacing:0.05em; box-shadow:3px 3px 0 rgba(0,0,0,0.1);
+}
+.hero h1 { font-family:'Fredoka One',cursive; font-size:clamp(2.4rem,7vw,4.2rem); line-height:1.1; color:var(--dark); margin-bottom:1rem; }
+.hero h1 .c1 { color:var(--pink); }
+.hero h1 .c2 { color:var(--orange); }
+.hero p { font-size:1.05rem; color:var(--muted); max-width:520px; margin:0 auto 2rem; line-height:1.7; }
+.hero-pills { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.hero-pill {
+  background:var(--white); border-radius:50px; padding:8px 18px;
+  font-size:13px; font-weight:700; border:2.5px solid; box-shadow:3px 3px 0 rgba(0,0,0,0.07);
+}
+.hp1 { border-color:var(--pink);   color:var(--pink); }
+.hp2 { border-color:var(--sky);    color:var(--sky); }
+.hp3 { border-color:var(--mint);   color:var(--mint); }
+
+.floaties { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.floaty { position:absolute; font-size:2rem; opacity:0.55; animation:float 4s ease-in-out infinite; }
+.floaty:nth-child(1){ top:8%;  left:5%;  animation-delay:0s; }
+.floaty:nth-child(2){ top:15%; right:6%; animation-delay:0.8s; }
+.floaty:nth-child(3){ top:60%; left:3%;  animation-delay:1.4s; }
+.floaty:nth-child(4){ top:50%; right:4%; animation-delay:0.4s; }
+.floaty:nth-child(5){ top:80%; left:8%;  animation-delay:2s; }
+.floaty:nth-child(6){ top:75%; right:7%; animation-delay:1s; }
+@keyframes float { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-14px) rotate(4deg)} }
+
+/* KITCHEN */
+.kitchen-wrap { max-width:860px; margin:0 auto; padding:0 1.5rem; position:relative; z-index:1; }
+.kitchen-card {
+  background:var(--white); border-radius:28px; border:3px solid var(--yellow);
+  padding:1.5rem 1.5rem 1rem; box-shadow:6px 6px 0 rgba(255,217,61,0.25);
+  position:relative; overflow:hidden;
+}
+.kitchen-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:6px;
+  background:linear-gradient(90deg,var(--pink),var(--yellow),var(--mint),var(--sky),var(--purple));
+}
+.kitchen-hint { text-align:center; font-size:13px; font-weight:700; color:var(--muted); margin-bottom:1rem; }
+
+/* SECTIONS */
+section { max-width:900px; margin:0 auto; padding:3rem 1.5rem; scroll-margin-top:68px; position:relative; z-index:1; }
+.s-chip {
+  display:inline-block; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em;
+  padding:4px 14px; border-radius:50px; margin-bottom:0.6rem;
+}
+.ch-pink   { background:#FFE0EC; color:var(--pink); }
+.ch-purple { background:#EDE9FF; color:#7B6FE0; }
+.ch-sky    { background:#E0F7F6; color:#2A9490; }
+.s-title   { font-family:'Fredoka One',cursive; font-size:2rem; color:var(--dark); margin-bottom:1.8rem; }
+
+/* CARDS GRID */
+.cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; }
+.comp-card {
+  background:var(--white); border-radius:22px; border:3px solid transparent;
+  padding:1.4rem; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s;
+}
+.comp-card:hover  { transform:translateY(-4px) rotate(-0.5deg); }
+.comp-card.active { transform:translateY(-2px); }
+.cc1 { border-color:var(--pink);   box-shadow:5px 5px 0 rgba(255,107,157,0.18); }
+.cc2 { border-color:var(--sky);    box-shadow:5px 5px 0 rgba(78,205,196,0.18); }
+.cc3 { border-color:var(--orange); box-shadow:5px 5px 0 rgba(255,159,67,0.18); }
+.cc4 { border-color:var(--mint);   box-shadow:5px 5px 0 rgba(107,203,119,0.18); }
+.cc5 { border-color:var(--purple); box-shadow:5px 5px 0 rgba(162,155,254,0.18); }
+.cc6 { border-color:var(--yellow); box-shadow:5px 5px 0 rgba(255,217,61,0.22); }
+.cc1.active { background:#FFF0F6; }
+.cc2.active { background:#F0FFFE; }
+.cc3.active { background:#FFF5EC; }
+.cc4.active { background:#F0FBF1; }
+.cc5.active { background:#F4F2FF; }
+.cc6.active { background:#FFFBEA; }
+
+.card-icon  { font-size:2.4rem; margin-bottom:0.7rem; display:block; }
+.card-title { font-family:'Fredoka One',cursive; font-size:1.2rem; color:var(--dark); margin-bottom:2px; }
+.card-sub   { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.6rem; }
+.cs1{color:var(--pink)} .cs2{color:var(--sky)} .cs3{color:var(--orange)} .cs4{color:var(--mint)} .cs5{color:var(--purple)} .cs6{color:#C9A800}
+.card-desc  { font-size:13.5px; color:var(--muted); line-height:1.55; }
+
+/* DETAIL PANEL */
+.detail-panel {
+  display:none; margin-top:1.2rem; background:var(--white);
+  border-radius:24px; border:3px solid var(--pink); padding:2rem;
+  animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+  box-shadow:6px 6px 0 rgba(255,107,157,0.15);
+}
+.detail-panel.visible { display:block; }
+@keyframes popIn { from{opacity:0;transform:scale(0.95) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.d-header {
+  display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;
+  padding-bottom:1.2rem; border-bottom:2px dashed var(--yellow);
+}
+.d-icon { font-size:3rem; }
+.d-name { font-family:'Fredoka One',cursive; font-size:1.5rem; color:var(--dark); }
+.d-eng  { font-size:13px; font-weight:700; color:var(--pink); }
+.d-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; }
+@media(max-width:600px){ .d-grid{grid-template-columns:1fr} }
+.d-label { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:0.5rem; }
+
+.analogy-box {
+  background:linear-gradient(135deg,#FFF0F6,#FFFBEA);
+  border:2px solid var(--yellow); border-radius:16px; padding:1.2rem 1.1rem;
+  font-size:14px; line-height:1.7; color:var(--text); position:relative; margin-top:1.2rem;
+}
+.analogy-box::before { content:'🍰'; position:absolute; top:-13px; left:12px; font-size:1.4rem; }
+.why-box {
+  background:linear-gradient(135deg,#F0FFFE,#F0FBF1);
+  border:2px solid var(--mint); border-radius:16px; padding:1rem 1.1rem;
+  font-size:14px; line-height:1.7; color:var(--text); margin-top:0.4rem;
+}
+.q-box {
+  background:linear-gradient(135deg,#F4F2FF,#FFF0F6);
+  border:2px solid var(--purple); border-radius:16px; padding:1rem 1.1rem;
+  font-size:14px; line-height:1.7; color:var(--text); margin-top:1rem;
+}
+.tags-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:1rem; }
+.tag { font-size:12px; font-weight:700; padding:4px 12px; border-radius:50px; background:#F4F2FF; color:var(--purple); border:2px solid #D4CFFF; }
+
+/* QUIZ */
+.quiz-outer {
+  background:linear-gradient(135deg,#667EEA 0%,#764BA2 100%);
+  border-radius:28px; padding:2.5rem; box-shadow:8px 8px 0 rgba(102,126,234,0.25);
+  position:relative; overflow:hidden;
+}
+.quiz-outer::after { content:'🌟'; position:absolute; top:1.2rem; right:1.5rem; font-size:2.2rem; opacity:0.3; animation:float 3s ease-in-out infinite; }
+.quiz-outer .s-chip { background:rgba(255,255,255,0.2); color:white; }
+.quiz-outer .s-title { color:white; }
+.quiz-q {
+  font-size:1.05rem; font-weight:700; color:white; line-height:1.6; margin-bottom:1.4rem;
+  background:rgba(255,255,255,0.1); border-radius:16px; padding:1rem 1.2rem;
+}
+.quiz-opts { display:grid; gap:10px; }
+.quiz-opt {
+  background:rgba(255,255,255,0.12); border:2.5px solid rgba(255,255,255,0.25);
+  border-radius:14px; padding:0.9rem 1.2rem; cursor:pointer;
+  font-size:14px; font-weight:600; color:white; transition:all 0.18s;
+  text-align:left; font-family:'Nunito',sans-serif;
+}
+.quiz-opt:hover  { background:rgba(255,255,255,0.22); border-color:var(--yellow); transform:translateX(4px); }
+.quiz-opt.correct{ background:rgba(107,203,119,0.3); border-color:var(--mint); }
+.quiz-opt.wrong  { background:rgba(255,107,107,0.3); border-color:var(--red); }
+.quiz-fb { display:none; margin-top:1rem; border-radius:14px; padding:0.9rem 1.2rem; font-size:14px; font-weight:600; line-height:1.6; }
+.quiz-fb.show { display:block; }
+.quiz-fb.good { background:rgba(107,203,119,0.2); border:2px solid var(--mint); color:#C8FFD4; }
+.quiz-fb.bad  { background:rgba(255,107,107,0.2); border:2px solid var(--red);  color:#FFD6D6; }
+.quiz-nav { display:flex; align-items:center; justify-content:space-between; margin-top:1.4rem; }
+.quiz-prog{ font-size:13px; font-weight:700; color:rgba(255,255,255,0.5); }
+.btn {
+  background:var(--yellow); color:var(--dark); border:none; border-radius:50px;
+  padding:0.65rem 1.6rem; font-size:14px; font-weight:800; cursor:pointer;
+  font-family:'Nunito',sans-serif; transition:transform 0.15s, box-shadow 0.15s;
+  box-shadow:3px 3px 0 rgba(0,0,0,0.15);
+}
+.btn:hover    { transform:translateY(-2px); box-shadow:4px 5px 0 rgba(0,0,0,0.15); }
+.btn:active   { transform:translateY(0); }
+.btn:disabled { opacity:0.35; cursor:default; transform:none; }
+.done-inner { text-align:center; padding:1rem 0; }
+.done-emoji { font-size:4rem; margin-bottom:0.8rem; display:block; animation:float 2s ease-in-out infinite; }
+.done-inner h3 { font-family:'Fredoka One',cursive; font-size:1.8rem; color:white; margin-bottom:0.4rem; }
+.done-inner p  { color:rgba(255,255,255,0.7); font-size:14px; font-weight:600; margin-bottom:1.5rem; }
+
+/* RESUMEN TABLE */
+.resumen-wrap { background:var(--white); border-radius:24px; overflow:hidden; border:3px solid var(--sky); box-shadow:6px 6px 0 rgba(78,205,196,0.18); }
+.resumen-table { width:100%; border-collapse:collapse; font-size:14px; }
+.resumen-table thead tr { background:linear-gradient(90deg,var(--sky),var(--blue)); }
+.resumen-table th { text-align:left; padding:12px 16px; color:white; font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; }
+.resumen-table td { padding:12px 16px; border-bottom:2px dashed #E8F8F7; vertical-align:top; }
+.resumen-table tr:last-child td { border-bottom:none; }
+.resumen-table tr:nth-child(even) td { background:#F5FFFE; }
+.en { display:inline-block; font-family:monospace; font-size:12px; background:#EDE9FF; color:var(--purple); border-radius:6px; padding:2px 7px; font-weight:700; }
+
+footer {
+  position:relative; z-index:1; text-align:center; padding:2.5rem 1.5rem;
+  background:var(--dark); color:rgba(255,255,255,0.55); font-size:13px; font-weight:600;
+}
+footer span { color:var(--yellow); }
+
+@media(max-width:640px){ .nav-pills{display:none} .hero{padding:3rem 1.2rem 2rem} section{padding:2rem 1.2rem} }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">🍰 La Cocina Digital</span>
+  <div class="nav-pills">
+    <button class="nav-pill active" data-section="cocina"      onclick="goTo('cocina')">🍳 La cocina</button>
+    <button class="nav-pill"        data-section="componentes" onclick="goTo('componentes')">🧩 Componentes</button>
+    <button class="nav-pill"        data-section="quiz"        onclick="goTo('quiz')">⭐ Practica</button>
+    <button class="nav-pill"        data-section="resumen"     onclick="goTo('resumen')">📋 Resumen</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="floaties">
+    <span class="floaty">🧁</span><span class="floaty">⭐</span><span class="floaty">🎨</span>
+    <span class="floaty">🍭</span><span class="floaty">🌈</span><span class="floaty">🎀</span>
+  </div>
+  <div class="hero-badge">✨ Bloque 1 de 3 ✨</div>
+  <h1>La <span class="c1">computadora</span><br>es una <span class="c2">cocina</span> 🎂</h1>
+  <p>Todo lo que necesitas saber sobre cómo funciona una computadora, explicado con repostería y colores.</p>
+  <div class="hero-pills">
+    <span class="hero-pill hp1">🍰 7 conceptos</span>
+    <span class="hero-pill hp2">🧠 Analogías de cocina</span>
+    <span class="hero-pill hp3">✅ Quiz al final</span>
+  </div>
+</div>
+
+<div class="kitchen-wrap" id="cocina">
+  <div class="kitchen-card">
+    <p class="kitchen-hint">👆 ¡Toca cada parte de la cocina para aprender más!</p>
+    <svg width="100%" viewBox="0 0 800 355" xmlns="http://www.w3.org/2000/svg" style="display:block">
+      <!-- Counter -->
+      <rect x="10" y="215" width="780" height="110" rx="16" fill="#FFF0DC"/>
+      <rect x="10" y="209" width="780" height="20" rx="8" fill="#FFD93D"/>
+      <!-- CPU stove -->
+      <g onclick="showDetail('cpu')" style="cursor:pointer">
+        <rect x="40" y="108" width="168" height="118" rx="14" fill="#FF6B9D"/>
+        <rect x="52" y="120" width="144" height="94" rx="10" fill="#FF3D7F"/>
+        <circle cx="95"  cy="153" r="22" fill="#C2185B" stroke="#FFD93D" stroke-width="3"/>
+        <circle cx="95"  cy="153" r="12" fill="#FF9F43"/>
+        <circle cx="150" cy="146" r="17" fill="#C2185B" stroke="#FFD93D" stroke-width="2.5"/>
+        <circle cx="150" cy="146" r="9"  fill="#FF9F43" opacity="0.7"/>
+        <circle cx="163" cy="178" r="11" fill="#C2185B" stroke="#FFD93D" stroke-width="2"/>
+        <path d="M95 131 Q100 118 95 106 Q90 118 85 106 Q82 122 95 131Z" fill="#FFD93D"/>
+        <path d="M95 131 Q98 122 95 113 Q92 122 89 113 Q87 124 95 131Z" fill="#FF9F43"/>
+        <text x="124" y="240" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="15" fill="#FF3D7F">CPU</text>
+        <text x="124" y="257" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="11" font-weight="700" fill="#AAA">La chef 👩‍🍳</text>
+      </g>
+      <!-- RAM worktable -->
+      <g onclick="showDetail('ram')" style="cursor:pointer">
+        <rect x="235" y="145" width="192" height="74" rx="14" fill="#4ECDC4" opacity="0.12" stroke="#4ECDC4" stroke-width="3" stroke-dasharray="6,4"/>
+        <rect x="250" y="157" width="38" height="28" rx="8" fill="#4ECDC4" opacity="0.85"/>
+        <rect x="299" y="153" width="30" height="34" rx="8" fill="#FF6B9D" opacity="0.7"/>
+        <rect x="340" y="159" width="42" height="26" rx="8" fill="#FFD93D" opacity="0.9"/>
+        <rect x="394" y="155" width="24" height="30" rx="8" fill="#A29BFE" opacity="0.8"/>
+        <text x="331" y="240" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="15" fill="#2A9490">RAM</text>
+        <text x="331" y="257" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="11" font-weight="700" fill="#AAA">Mesa de trabajo 🪣</text>
+      </g>
+      <!-- Disco cabinet -->
+      <g onclick="showDetail('disco')" style="cursor:pointer">
+        <rect x="458" y="58" width="120" height="166" rx="14" fill="#FF9F43"/>
+        <rect x="466" y="68" width="104" height="70" rx="8" fill="#FFF5EC"/>
+        <rect x="466" y="148" width="104" height="70" rx="8" fill="#FFF5EC"/>
+        <circle cx="518" cy="103" r="6" fill="#FF9F43"/>
+        <circle cx="518" cy="183" r="6" fill="#FF9F43"/>
+        <rect x="474" y="76"  width="32" height="24" rx="6" fill="#FF6B9D"/>
+        <rect x="512" y="76"  width="26" height="24" rx="6" fill="#6BCB77"/>
+        <rect x="544" y="76"  width="20" height="18" rx="5" fill="#A29BFE"/>
+        <rect x="474" y="106" width="20" height="18" rx="5" fill="#4ECDC4"/>
+        <rect x="474" y="156" width="32" height="24" rx="6" fill="#FFD93D"/>
+        <rect x="512" y="156" width="26" height="24" rx="6" fill="#FF6B9D" opacity="0.7"/>
+        <text x="518" y="240" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="15" fill="#C05C00">HDD/SSD</text>
+        <text x="518" y="257" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="11" font-weight="700" fill="#AAA">La alacena 🗄️</text>
+      </g>
+      <!-- OS book -->
+      <g onclick="showDetail('os')" style="cursor:pointer">
+        <rect x="612" y="88" width="96" height="136" rx="12" fill="#6BCB77"/>
+        <rect x="618" y="96" width="84" height="122" rx="8" fill="#F0FBF1"/>
+        <rect x="612" y="88" width="10" height="136" rx="4" fill="#3A9E47"/>
+        <line x1="628" y1="116" x2="694" y2="116" stroke="#6BCB77" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="628" y1="130" x2="690" y2="130" stroke="#C8EBC9" stroke-width="2" stroke-linecap="round"/>
+        <line x1="628" y1="144" x2="694" y2="144" stroke="#C8EBC9" stroke-width="2" stroke-linecap="round"/>
+        <line x1="628" y1="158" x2="688" y2="158" stroke="#C8EBC9" stroke-width="2" stroke-linecap="round"/>
+        <line x1="628" y1="172" x2="692" y2="172" stroke="#C8EBC9" stroke-width="2" stroke-linecap="round"/>
+        <line x1="628" y1="186" x2="685" y2="186" stroke="#C8EBC9" stroke-width="2" stroke-linecap="round"/>
+        <text x="660" y="240" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="15" fill="#3A9E47">OS/Linux</text>
+        <text x="660" y="257" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="11" font-weight="700" fill="#AAA">El reglamento 📋</text>
+      </g>
+      <!-- Terminal screen -->
+      <g onclick="showDetail('terminal')" style="cursor:pointer">
+        <rect x="728" y="128" width="58" height="96" rx="10" fill="#2D3436"/>
+        <rect x="733" y="134" width="48" height="72" rx="6" fill="#1a1a2e"/>
+        <text x="757" y="156" text-anchor="middle" font-family="monospace" font-size="8" fill="#FFD93D">$ ls</text>
+        <text x="757" y="168" text-anchor="middle" font-family="monospace" font-size="7" fill="#6BCB77">recetas/</text>
+        <text x="757" y="179" text-anchor="middle" font-family="monospace" font-size="7" fill="#6BCB77">moldes/</text>
+        <rect x="748" y="184" width="9" height="10" rx="2" fill="#FFD93D" opacity="0.9"/>
+        <rect x="730" y="214" width="58" height="8" rx="3" fill="#444"/>
+        <text x="757" y="240" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="15" fill="#2D3436">Terminal</text>
+        <text x="757" y="257" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="11" font-weight="700" fill="#AAA">Voz directa 💬</text>
+      </g>
+      <text x="400" y="330" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="12" font-weight="700" fill="#CCC">✨ Toca cualquier elemento para ver la explicación ✨</text>
+    </svg>
+  </div>
+</div>
+
+<section id="componentes">
+  <div class="s-chip ch-pink">🧩 Los ingredientes del sistema</div>
+  <div class="s-title">¿Qué hay dentro? 🔍</div>
+  <div class="cards-grid">
+    <div class="comp-card cc1" id="card-cpu"      onclick="showDetail('cpu')"><span class="card-icon">🍳</span><div class="card-title">CPU</div><div class="card-sub cs1">El procesador</div><div class="card-desc">La chef que todo lo ejecuta. No guarda nada — solo cocina a toda velocidad.</div></div>
+    <div class="comp-card cc2" id="card-ram"      onclick="showDetail('ram')"><span class="card-icon">🪣</span><div class="card-title">RAM</div><div class="card-sub cs2">La memoria temporal</div><div class="card-desc">La mesa de trabajo. Rapidísima, pero se vacía cuando apagas la luz.</div></div>
+    <div class="comp-card cc3" id="card-disco"    onclick="showDetail('disco')"><span class="card-icon">🗄️</span><div class="card-title">HDD / SSD</div><div class="card-sub cs3">El disco duro</div><div class="card-desc">La alacena. Todo queda guardado aunque apagues y te vayas a dormir.</div></div>
+    <div class="comp-card cc4" id="card-os"       onclick="showDetail('os')"><span class="card-icon">📋</span><div class="card-title">OS / Linux</div><div class="card-sub cs4">Sistema operativo</div><div class="card-desc">El reglamento de la cocina. Sin él, nadie sabe qué hacer con nada.</div></div>
+    <div class="comp-card cc5" id="card-terminal" onclick="showDetail('terminal')"><span class="card-icon">💬</span><div class="card-title">Terminal</div><div class="card-sub cs5">Línea de comandos</div><div class="card-desc">Hablarle directo a la cocina, sin señas ni clicks ni íconos.</div></div>
+    <div class="comp-card cc6" id="card-proceso"  onclick="showDetail('proceso')"><span class="card-icon">🎂</span><div class="card-title">Proceso vs Programa</div><div class="card-sub cs6">La receta en acción</div><div class="card-desc">La receta guardada versus la receta que preparas ahorita mismo.</div></div>
+  </div>
+  <div class="detail-panel" id="detail-panel"></div>
+</section>
+
+<section id="quiz">
+  <div class="quiz-outer">
+    <div class="s-chip">🌟 Practica lo que aprendiste</div>
+    <div class="s-title">Mini quiz ✏️</div>
+    <div id="quiz-main">
+      <div class="quiz-q" id="quiz-q"></div>
+      <div class="quiz-opts" id="quiz-opts"></div>
+      <div class="quiz-fb" id="quiz-fb"></div>
+      <div class="quiz-nav">
+        <span class="quiz-prog" id="quiz-prog"></span>
+        <button class="btn" id="quiz-next" onclick="nextQ()" disabled>Siguiente →</button>
+      </div>
+    </div>
+    <div id="quiz-done" style="display:none">
+      <div class="done-inner">
+        <span class="done-emoji">🎂</span>
+        <h3>¡Bloque 1 completado!</h3>
+        <p id="quiz-score-txt"></p>
+        <button class="btn" onclick="restartQuiz()">🔄 Repetir quiz</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resumen">
+  <div class="s-chip ch-sky">📋 Para no olvidar</div>
+  <div class="s-title">La cocina completa 🗺️</div>
+  <div class="resumen-wrap">
+    <table class="resumen-table">
+      <thead><tr><th>🧩 Componente</th><th>🍰 En la cocina</th><th>💡 Clave</th><th>🇺🇸 Inglés</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CPU</strong></td><td>La chef principal</td><td>Ejecuta todo, no guarda nada</td><td><span class="en">CPU / Processor</span></td></tr>
+        <tr><td><strong>RAM</strong></td><td>La mesa de trabajo</td><td>Rápida pero temporal</td><td><span class="en">RAM / Memory</span></td></tr>
+        <tr><td><strong>Disco duro</strong></td><td>La alacena</td><td>Permanente, más lenta que la RAM</td><td><span class="en">HDD / SSD / Storage</span></td></tr>
+        <tr><td><strong>Sistema operativo</strong></td><td>El reglamento</td><td>Coordina todo el hardware</td><td><span class="en">OS / Linux / Windows</span></td></tr>
+        <tr><td><strong>Terminal</strong></td><td>Dar órdenes directas</td><td>Más poderosa que íconos y clicks</td><td><span class="en">Terminal / CLI</span></td></tr>
+        <tr><td><strong>Proceso</strong></td><td>Receta en preparación</td><td>Vive en RAM; muere al cerrar</td><td><span class="en">Process / Task</span></td></tr>
+        <tr><td><strong>Programa</strong></td><td>Receta en la libreta</td><td>Vive en disco; siempre disponible</td><td><span class="en">Program / App</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <p>🍰 La Cocina Digital · Bloque 1 de 3 · Hecho con 💛 para aprender IT</p>
+  <p style="margin-top:0.4rem">Siguiente: <span>Bloque 2 — ¿Cómo se conectan las computadoras? 🌐</span></p>
+</footer>
+
+<script>
+const comps = {
+  cpu:{icon:'🍳',name:'CPU — El procesador',eng:'Central Processing Unit',
+    analogy:'Imagina la chef de tu pastelería favorita. Ella no guarda ingredientes ni tiene recetas pegadas en la frente — su trabajo es recibir la orden, ejecutarla en segundos y entregar el resultado. En un segundo puede hacer millones de operaciones.',
+    detail:'Cuando escuchas que una compu tiene 4 núcleos (cores), piensa en 4 chefs trabajando al mismo tiempo en la misma cocina, cada una en su propia estación.',
+    why:'En IT, cuando un servidor "se traba", muchas veces el CPU está saturado — demasiados pedidos para muy pocas chefs.',
+    q:'¿Qué pasaría si la chef se va de la cocina? Todo para. El CPU es tan esencial que sin él la computadora no existe.',
+    tags:['CPU','Core / Núcleo','GHz','Procesador','Intel','AMD'],bc:'var(--pink)'},
+  ram:{icon:'🪣',name:'RAM — La memoria',eng:'Random Access Memory',
+    analogy:'Tienes todo listo en la mesa para hacer macarons: la charola, el merengue batido, la manga pastelera. Todo a la mano porque en 5 minutos lo usas. Eso es la RAM: tu espacio de trabajo activo y rapidísimo.',
+    detail:'La trampa: cuando apagas la luz y regresas, la mesa está vacía. La RAM es temporal — todo lo que no guardaste antes de apagar, se fue para siempre.',
+    why:'Si abres 20 pestañas y la compu se pone lenta — tu RAM se llenó. Es como querer trabajar en una mesa de 60 cm con ingredientes para 500 cupcakes.',
+    q:'¿Cuánta RAM tiene tu computadora? ¿Cuánta crees que necesita Netflix con millones de usuarios simultáneos?',
+    tags:['RAM','GB','Memoria volátil','DDR4','Memoria temporal'],bc:'var(--sky)'},
+  disco:{icon:'🗄️',name:'HDD / SSD — El disco duro',eng:'Hard Drive / Solid State Drive',
+    analogy:'La alacena de tu pastelería. Ahí están todas las recetas en carpetas, los moldes, los insumos no perecederos. Cierras, te duermes, y al día siguiente todo sigue exactamente igual.',
+    detail:'HDD = cajones mecánicos (más lenta, más barata). SSD = alacena moderna sin piezas móviles (rapidísima, como tener todo a la mano de inmediato).',
+    why:'Cuando instalas un programa, lo guardas en el disco. Cuando lo abres, se copia a la RAM para que el CPU trabaje. Disco = alacena, RAM = mesa, CPU = chef.',
+    q:'¿Por qué una compu con SSD abre todo más rápido que una con HDD? ¡Ahora ya lo sabes!',
+    tags:['HDD','SSD','Storage','TB','GB','Almacenamiento permanente'],bc:'var(--orange)'},
+  os:{icon:'📋',name:'Sistema operativo (OS)',eng:'Operating System — Linux / Windows / macOS',
+    analogy:'El reglamento de tu cocina profesional: quién usa el horno, cómo se organizan los pedidos, qué hacer si algo se rompe. Sin reglamento, la cocina sería caos aunque tuvieras a la mejor chef del mundo.',
+    detail:'Linux es el OS favorito para servidores en todo el mundo. Gratuito, estable y configurable. La mayoría del internet corre sobre Linux. Tu teléfono Android también.',
+    why:'En IT profesional saber Linux no es opcional — es el idioma del trabajo. Windows es para el día a día, pero Linux es donde vive la infraestructura real.',
+    q:'¿Cuántos sistemas operativos conoces? ¿Cuál crees que usan Google, Amazon y Netflix para sus servidores?',
+    tags:['OS','Linux','Windows','macOS','Kernel','Ubuntu','CentOS'],bc:'var(--mint)'},
+  terminal:{icon:'💬',name:'Terminal — La línea de comandos',eng:'Terminal / CLI (Command Line Interface)',
+    analogy:'En lugar de señalarle a la chef con el dedo, le hablas directo: "hornea esto a 175° exactos por 23 minutos". Sin ambigüedades, más preciso, más rápido, más poderoso que hacer click en íconos.',
+    detail:'La terminal es una pantalla donde escribes instrucciones en texto. No es para expertos — es otro idioma. En IT muchos servidores no tienen pantalla ni mouse: la terminal es la única forma de hablarles.',
+    why:'Escribes "ls" y ves todos los archivos. Escribes "cd documentos" y entras a esa carpeta. Con esto manejas servidores en otros países sin estar ahí físicamente.',
+    q:'¿Te imaginas manejar un servidor en otro país sin teclado ni pantalla física, solo con texto? Eso hacen los ingenieros IT todos los días.',
+    tags:['Terminal','CLI','GUI','Comando','Bash','Shell','SSH'],bc:'var(--purple)'},
+  proceso:{icon:'🎂',name:'Proceso vs Programa',eng:'Process vs Program / Application',
+    analogy:'Tu receta de red velvet guardada en la libreta = el programa. Cuando empiezas a prepararla en la mesa con ingredientes activos y el horno encendido = el proceso. La receta siempre está; el proceso existe solo mientras cocinas.',
+    detail:'Cuando abres Chrome, el programa (en disco) se convierte en proceso activo (usando RAM y CPU). Al cerrarlo, el proceso termina — pero Chrome sigue guardado en disco.',
+    why:'Una compu puede tener cientos de procesos corriendo invisibles al mismo tiempo. Ver y controlar esos procesos es una de las primeras cosas que aprenderás en Linux.',
+    q:'¿Cuántos programas tienes instalados? ¿Y cuántos procesos crees que corren ahorita mismo mientras lees esto?',
+    tags:['Proceso','Programa','Task','Process','PID','RAM','CPU'],bc:'var(--yellow)'}
+};
+
+function showDetail(key){
+  document.querySelectorAll('.comp-card').forEach(c=>c.classList.remove('active'));
+  const card=document.getElementById('card-'+key); if(card) card.classList.add('active');
+  const d=comps[key], panel=document.getElementById('detail-panel');
+  panel.style.borderColor=d.bc; panel.style.boxShadow=`6px 6px 0 ${d.bc}33`;
+  panel.innerHTML=`
+    <div class="d-header">
+      <span class="d-icon">${d.icon}</span>
+      <div><div class="d-name">${d.name}</div><div class="d-eng">${d.eng}</div></div>
+    </div>
+    <div class="d-grid">
+      <div>
+        <div class="d-label">🍰 En la cocina de repostería</div>
+        <div class="analogy-box">${d.analogy}</div>
+        <div style="margin-top:1rem"><div class="d-label">💡 Un poco más</div>
+        <p style="font-size:14px;line-height:1.7;margin-top:0.4rem;color:var(--text)">${d.detail}</p></div>
+      </div>
+      <div>
+        <div class="d-label">🏢 ¿Por qué importa en IT?</div>
+        <div class="why-box">${d.why}</div>
+        <div class="q-box">🤔 <strong>Para reflexionar:</strong> ${d.q}</div>
+        <div class="tags-row">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`;
+  panel.classList.add('visible');
+  setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+// QUIZ
+const qData=[
+  {q:'Se fue la luz y al regresar tu mesa de trabajo está vacía. ¿Qué parte de la computadora se comporta igual?',
+   opts:['El disco duro (HDD)','La RAM','El CPU','El sistema operativo'],c:1,
+   good:'¡Exacto! 🎉 La RAM es temporal como la mesa — todo desaparece cuando se va la energía.',
+   bad:'Piénsalo: la mesa de trabajo se vacía al irte, igual que la RAM al apagar. El disco (alacena) sí guarda todo permanentemente.'},
+  {q:'¿Qué sería un CPU con 4 núcleos (cores) en la analogía de la cocina?',
+   opts:['4 chefs trabajando en paralelo','Una alacena muy grande','Una mesa de trabajo extra','Un reglamento más detallado'],c:0,
+   good:'¡Perfecto! 🌟 Los núcleos (cores) son como chefs trabajando simultáneamente en la misma cocina.',
+   bad:'Recuerda: la chef = CPU. Si tiene 4 chefs trabajando a la vez = 4 núcleos (cores) en paralelo.'},
+  {q:'Guardas una receta nueva en tu libreta. En la computadora, ¿dónde estás guardando algo?',
+   opts:['En la RAM','En el CPU','En el disco duro (SSD/HDD)','En la terminal'],c:2,
+   good:'¡Sí! 🗄️ La libreta = la alacena = el disco duro. Permanente, siempre disponible.',
+   bad:'La libreta = la alacena = el disco duro. La RAM solo es la mesa de trabajo activo, no sirve para guardar permanentemente.'},
+  {q:'¿Por qué Linux es tan importante para trabajar en IT?',
+   opts:['Porque es más bonito que Windows','Porque la mayoría de servidores del mundo corren Linux','Porque es el único sistema gratis','Porque no necesita terminal'],c:1,
+   good:'¡Exactamente! 🐧 La infraestructura real del internet corre en Linux. Es el idioma del trabajo en IT.',
+   bad:'La clave: Google, Amazon, Netflix — todos sus servidores corren Linux. Es el idioma de la infraestructura tecnológica.'},
+  {q:'Tienes la receta en la libreta Y la estás preparando en la mesa. ¿Qué son esas dos cosas en la computadora?',
+   opts:['Dos programas distintos','El programa (en disco) y el proceso (en ejecución)','El OS y el CPU','La RAM y el disco'],c:1,
+   good:'¡Perfecto! 🎂 Receta guardada = programa en disco. Receta que preparas = proceso activo en RAM.',
+   bad:'Receta en libreta = PROGRAMA (en disco). Receta que preparas ahora = PROCESO (activo en RAM y CPU).'}
+];
+let cQ=0,score=0,answered=false;
+
+function loadQ(){
+  const q=qData[cQ];
+  document.getElementById('quiz-q').textContent=q.q;
+  document.getElementById('quiz-prog').textContent=`Pregunta ${cQ+1} de ${qData.length}`;
+  const fb=document.getElementById('quiz-fb'); fb.className='quiz-fb'; fb.textContent='';
+  document.getElementById('quiz-next').disabled=true; answered=false;
+  const opts=document.getElementById('quiz-opts'); opts.innerHTML='';
+  q.opts.forEach((o,i)=>{const b=document.createElement('button');b.className='quiz-opt';b.textContent=o;b.onclick=()=>answer(i);opts.appendChild(b);});
+}
+function answer(idx){
+  if(answered)return; answered=true;
+  const q=qData[cQ], btns=document.querySelectorAll('.quiz-opt');
+  btns[idx].classList.add(idx===q.c?'correct':'wrong');
+  if(idx!==q.c) btns[q.c].classList.add('correct');
+  const fb=document.getElementById('quiz-fb');
+  if(idx===q.c){score++;fb.textContent=q.good;fb.className='quiz-fb show good';}
+  else{fb.textContent=q.bad;fb.className='quiz-fb show bad';}
+  document.getElementById('quiz-next').disabled=false;
+}
+function nextQ(){
+  cQ++;
+  if(cQ>=qData.length){
+    document.getElementById('quiz-main').style.display='none';
+    document.getElementById('quiz-done').style.display='block';
+    document.getElementById('quiz-score-txt').textContent=`Respondiste ${score} de ${qData.length} correctamente 🌟`;
+  }else loadQ();
+}
+function restartQuiz(){cQ=0;score=0;document.getElementById('quiz-main').style.display='block';document.getElementById('quiz-done').style.display='none';loadQ();}
+
+// NAV
+function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});setActive(id);}
+function setActive(id){document.querySelectorAll('.nav-pill').forEach(p=>p.classList.remove('active'));const m=[...document.querySelectorAll('.nav-pill')].find(p=>p.dataset.section===id);if(m)m.classList.add('active');}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)setActive(e.target.id);});},{threshold:0.3,rootMargin:'-60px 0px -40% 0px'});
+['cocina','componentes','quiz','resumen'].forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+
+loadQ();
+</script>
+</body>
+</html>
