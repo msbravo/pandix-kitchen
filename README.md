@@ -1,6 +1,6 @@
 # Pandix — La Cocina Digital 🍰
 
-Material de estudio IT personalizado para Alejandra (Pandix).
+Material de estudio IT personalizado para Pandix.
 Un camino de cero a Linux, redes, virtualización y cloud — explicado con repostería.
 
 ---
