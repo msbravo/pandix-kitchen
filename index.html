@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pandix — La Cocina Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:   #FF6B9D;
+  --yellow: #FFD93D;
+  --mint:   #6BCB77;
+  --sky:    #4ECDC4;
+  --orange: #FF9F43;
+  --purple: #A29BFE;
+  --red:    #FF6B6B;
+  --blue:   #74B9FF;
+  --bg:     #FFF8F0;
+  --white:  #FFFFFF;
+  --dark:   #2D3436;
+  --text:   #3D3D3D;
+  --muted:  #999;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
+
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255,107,157,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 15%, rgba(78,205,196,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(255,217,61,0.07) 0%, transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(162,155,254,0.07) 0%, transparent 35%);
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--white); border-bottom: 3px solid var(--yellow);
+  padding: 0 2rem; display: flex; align-items: center; height: 60px;
+  box-shadow: 0 4px 0 rgba(255,217,61,0.15);
+}
+.nav-brand { font-family: 'Fredoka One', cursive; font-size: 1.15rem; color: var(--pink); }
+
+/* HERO */
+.hero {
+  position: relative; z-index: 1;
+  padding: 5rem 2rem 3rem; max-width: 860px; margin: 0 auto; text-align: center;
+}
+.floaties { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.floaty { position: absolute; font-size: 2rem; opacity: 0.5; animation: float 4s ease-in-out infinite; }
+.floaty:nth-child(1){ top:5%;  left:4%;  animation-delay:0s; }
+.floaty:nth-child(2){ top:12%; right:5%; animation-delay:0.7s; }
+.floaty:nth-child(3){ top:55%; left:2%;  animation-delay:1.3s; }
+.floaty:nth-child(4){ top:50%; right:3%; animation-delay:0.4s; }
+.floaty:nth-child(5){ top:78%; left:6%;  animation-delay:1.8s; }
+.floaty:nth-child(6){ top:72%; right:6%; animation-delay:1s; }
+.floaty:nth-child(7){ top:30%; left:1%;  animation-delay:2.2s; }
+.floaty:nth-child(8){ top:35%; right:2%; animation-delay:0.2s; }
+@keyframes float { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-14px) rotate(4deg)} }
+
+.hero-badge {
+  display: inline-block; background: var(--yellow); color: var(--dark);
+  font-weight: 800; font-size: 12px; border-radius: 50px; padding: 5px 18px;
+  margin-bottom: 1.2rem; letter-spacing: 0.06em; box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+}
+.hero h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.6rem, 8vw, 5rem);
+  line-height: 1.1; color: var(--dark); margin-bottom: 0.6rem;
+}
+.hero h1 .c1 { color: var(--pink); }
+.hero h1 .c2 { color: var(--orange); }
+.hero-sub {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: var(--muted); margin-bottom: 1.4rem; font-weight: 400;
+}
+.hero p {
+  font-size: 1rem; color: var(--muted);
+  max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7;
+}
+
+/* PROGRESS BAR */
+.progress-wrap {
+  max-width: 560px; margin: 0 auto 3rem;
+  background: var(--white); border-radius: 50px; border: 2.5px solid var(--yellow);
+  padding: 6px 8px; box-shadow: 3px 3px 0 rgba(255,217,61,0.2);
+  display: flex; align-items: center; gap: 10px;
+}
+.progress-label { font-size: 13px; font-weight: 800; color: var(--muted); white-space: nowrap; padding: 0 6px; }
+.progress-track { flex: 1; height: 12px; background: #F0EBE3; border-radius: 50px; overflow: hidden; }
+.progress-fill  { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow)); width: 33%; transition: width 1s ease; }
+.progress-pct   { font-size: 13px; font-weight: 800; color: var(--orange); white-space: nowrap; padding: 0 6px; }
+
+/* BLOCKS GRID */
+.blocks-section { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+.blocks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+
+.block-card {
+  background: var(--white); border-radius: 24px; border: 3px solid transparent;
+  padding: 2rem 1.6rem; position: relative; overflow: hidden;
+  transition: transform 0.22s, box-shadow 0.22s;
+  display: flex; flex-direction: column;
+}
+.block-card.available { cursor: pointer; }
+.block-card.available:hover { transform: translateY(-5px) rotate(-0.4deg); }
+.block-card.coming { opacity: 0.65; cursor: default; }
+
+.bc1 { border-color: var(--pink);   box-shadow: 6px 6px 0 rgba(255,107,157,0.18); }
+.bc2 { border-color: var(--sky);    box-shadow: 6px 6px 0 rgba(78,205,196,0.18); }
+.bc3 { border-color: var(--purple); box-shadow: 6px 6px 0 rgba(162,155,254,0.18); }
+
+.block-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+}
+.bc1::before { background: linear-gradient(90deg, var(--pink), var(--orange)); }
+.bc2::before { background: linear-gradient(90deg, var(--sky), var(--blue)); }
+.bc3::before { background: linear-gradient(90deg, var(--purple), var(--pink)); }
+
+.block-num {
+  font-family: 'Fredoka One', cursive; font-size: 0.85rem;
+  margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;
+}
+.num-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%; font-size: 13px; font-weight: 800;
+}
+.nb1 { background: #FFE0EC; color: var(--pink); }
+.nb2 { background: #E0F7F6; color: var(--sky); }
+.nb3 { background: #EDE9FF; color: var(--purple); }
+
+.block-status {
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 3px 10px; border-radius: 50px;
+}
+.status-done   { background: #E6FAE9; color: var(--mint); }
+.status-coming { background: #F0EBE3; color: var(--muted); }
+
+.block-icon { font-size: 3.2rem; margin: 0.8rem 0; display: block; }
+.block-title {
+  font-family: 'Fredoka One', cursive; font-size: 1.3rem;
+  color: var(--dark); margin-bottom: 0.4rem;
+}
+.block-subtitle { font-size: 13px; font-weight: 700; margin-bottom: 0.8rem; }
+.st1 { color: var(--pink); } .st2 { color: var(--sky); } .st3 { color: var(--purple); }
+.block-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; flex: 1; }
+
+.block-topics {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1.2rem;
+}
+.topic-tag {
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 50px;
+  background: #F4F2FF; color: var(--purple); border: 2px solid #D4CFFF;
+}
+.t1 .topic-tag { background: #FFE0EC; color: var(--pink); border-color: #FFB3CF; }
+.t2 .topic-tag { background: #E0F7F6; color: var(--sky);  border-color: #9AE6E3; }
+
+.block-btn {
+  margin-top: 1.4rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--pink); color: white; border: none; border-radius: 50px;
+  padding: 0.7rem 1.6rem; font-size: 14px; font-weight: 800;
+  font-family: 'Nunito', sans-serif; cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 3px 3px 0 rgba(255,107,157,0.35); text-decoration: none;
+  width: 100%; text-align: center;
+}
+.block-btn:hover { transform: translateY(-2px); box-shadow: 4px 5px 0 rgba(255,107,157,0.35); }
+.block-btn.btn-sky    { background: var(--sky);    box-shadow: 3px 3px 0 rgba(78,205,196,0.35); }
+.block-btn.btn-sky:hover { box-shadow: 4px 5px 0 rgba(78,205,196,0.35); }
+.block-btn.btn-coming { background: #DDD; color: #AAA; box-shadow: none; cursor: default; }
+.block-btn.btn-coming:hover { transform: none; }
+
+/* COMING SOON overlay badge */
+.coming-badge {
+  position: absolute; top: 1.2rem; right: 1.2rem;
+  background: var(--yellow); color: var(--dark);
+  font-size: 11px; font-weight: 800; border-radius: 50px;
+  padding: 4px 12px; box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+}
+
+/* FOOTER */
+footer {
+  position: relative; z-index: 1;
+  text-align: center; padding: 2.5rem 1.5rem;
+  background: var(--dark); color: rgba(255,255,255,0.5);
+  font-size: 13px; font-weight: 600;
+}
+footer span { color: var(--yellow); }
+footer a { color: var(--sky); text-decoration: none; font-weight: 700; }
+footer a:hover { text-decoration: underline; }
+
+@media(max-width:640px){ .hero{padding:3.5rem 1.2rem 2rem} .blocks-section{padding:0 1.2rem 3rem} }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">🍰 Pandix — La Cocina Digital</span>
+</nav>
+
+<div class="hero">
+  <div class="floaties">
+    <span class="floaty">🧁</span><span class="floaty">⭐</span>
+    <span class="floaty">🎨</span><span class="floaty">🍭</span>
+    <span class="floaty">🌈</span><span class="floaty">🎀</span>
+    <span class="floaty">🍰</span><span class="floaty">✨</span>
+  </div>
+  <div class="hero-badge">👩‍🍳 Tu camino en IT empieza aquí</div>
+  <h1><span class="c1">Pandix</span><br><span class="c2">Kitchen</span> 🎂</h1>
+  <p class="hero-sub">La Cocina Digital</p>
+  <p>Todo lo que necesitas para entrar al mundo de la tecnología, explicado en el idioma que ya conoces — repostería, colores y mucha energía.</p>
+
+  <div class="progress-wrap">
+    <span class="progress-label">Tu progreso</span>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+    <span class="progress-pct" id="prog-pct">1 de 3 bloques</span>
+  </div>
+</div>
+
+<div class="blocks-section">
+  <div class="blocks-grid">
+
+    <!-- BLOQUE 1 -->
+    <div class="block-card bc1 available t1" onclick="window.location='bloque1_cocina_computadora.html'">
+      <div class="block-num">
+        <span class="num-badge nb1">1</span>
+        <span class="block-status status-done">✅ Disponible</span>
+      </div>
+      <span class="block-icon">🍳</span>
+      <div class="block-title">¿Cómo funciona una computadora?</div>
+      <div class="block-subtitle st1">La cocina completa</div>
+      <div class="block-desc">CPU, RAM, disco duro, sistema operativo y terminal — todo explicado con la cocina de repostería que ya conoces.</div>
+      <div class="block-topics">
+        <span class="topic-tag">CPU</span>
+        <span class="topic-tag">RAM</span>
+        <span class="topic-tag">HDD/SSD</span>
+        <span class="topic-tag">Linux</span>
+        <span class="topic-tag">Terminal</span>
+      </div>
+      <a class="block-btn" href="bloque1_cocina_computadora.html">Entrar al Bloque 1 →</a>
+    </div>
+
+    <!-- BLOQUE 2 -->
+    <div class="block-card bc2 available t2" onclick="window.location='bloque2_redes.html'">
+      <div class="block-num">
+        <span class="num-badge nb2">2</span>
+        <span class="block-status status-done">✅ Disponible</span>
+      </div>
+      <span class="block-icon">🌐</span>
+      <div class="block-title">¿Cómo se conectan las computadoras?</div>
+      <div class="block-subtitle st2">La escuela y sus pasillos</div>
+      <div class="block-desc">IP, DNS, routers, switches y protocolos — explicados como los pasillos, salones y reglas de comunicación de una escuela.</div>
+      <div class="block-topics">
+        <span class="topic-tag">IP</span>
+        <span class="topic-tag">DNS</span>
+        <span class="topic-tag">Router</span>
+        <span class="topic-tag">Switch</span>
+        <span class="topic-tag">Firewall</span>
+      </div>
+      <a class="block-btn btn-sky" href="bloque2_redes.html">Entrar al Bloque 2 →</a>
+    </div>
+
+    <!-- BLOQUE 3 -->
+    <div class="block-card bc3 coming">
+      <div class="coming-badge">🔜 Próximamente</div>
+      <div class="block-num">
+        <span class="num-badge nb3">3</span>
+        <span class="block-status status-coming">En preparación</span>
+      </div>
+      <span class="block-icon">☁️</span>
+      <div class="block-title">¿Qué es la nube?</div>
+      <div class="block-subtitle st3">La fábrica invisible</div>
+      <div class="block-desc">Virtualización, cloud computing, storage y los servicios que hacen funcionar el internet — explicados desde cero.</div>
+      <div class="block-topics">
+        <span class="topic-tag">Cloud</span>
+        <span class="topic-tag">VMware</span>
+        <span class="topic-tag">Storage</span>
+        <span class="topic-tag">AWS</span>
+        <span class="topic-tag">Virtualización</span>
+      </div>
+      <button class="block-btn btn-coming" disabled>Próximamente 🔜</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>🍰 <span>Pandix — La Cocina Digital</span> · Hecho con 💛 y mucho azúcar</p>
+  <p style="margin-top:0.5rem">Proyecto en <a href="https://github.com/msbravo/pandix-kitchen" target="_blank">GitHub ↗</a></p>
+</footer>
+
+<script>
+// Animate progress bar on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('prog-fill').style.width = '33%';
+  }, 400);
+});
+</script>
+</body>
+</html>
