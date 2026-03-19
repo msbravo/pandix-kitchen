@@ -262,11 +262,10 @@ footer a:hover { text-decoration: underline; }
     </div>
 
     <!-- BLOQUE 3 -->
-    <div class="block-card bc3 coming">
-      <div class="coming-badge">🔜 Próximamente</div>
+    <div class="block-card bc3 available" onclick="window.location='bloque3_nube.html'">
       <div class="block-num">
         <span class="num-badge nb3">3</span>
-        <span class="block-status status-coming">En preparación</span>
+        <span class="block-status status-done">✅ Disponible</span>
       </div>
       <span class="block-icon">☁️</span>
       <div class="block-title">¿Qué es la nube?</div>
@@ -279,7 +278,7 @@ footer a:hover { text-decoration: underline; }
         <span class="topic-tag">AWS</span>
         <span class="topic-tag">Virtualización</span>
       </div>
-      <button class="block-btn btn-coming" disabled>Próximamente 🔜</button>
+      <a class="block-btn" href="bloque3_nube.html" style="background:var(--purple);box-shadow:3px 3px 0 rgba(162,155,254,0.35)">Entrar al Bloque 3 →</a>
     </div>
 
   </div>
@@ -294,7 +293,8 @@ footer a:hover { text-decoration: underline; }
 // Animate progress bar on load
 window.addEventListener('load', () => {
   setTimeout(() => {
-    document.getElementById('prog-fill').style.width = '33%';
+    document.getElementById('prog-fill').style.width = '100%';
+    document.getElementById('prog-pct').textContent = '3 de 3 bloques';
   }, 400);
 });
 </script>
