@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque 3 — ¿Qué es la nube? · Pandix Kitchen</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:#FF6B9D; --yellow:#FFD93D; --mint:#6BCB77; --sky:#4ECDC4;
+  --orange:#FF9F43; --purple:#A29BFE; --red:#FF6B6B; --blue:#74B9FF;
+  --indigo:#6C63FF; --teal:#00B894;
+  --bg:#F5F0FF; --white:#FFFFFF; --dark:#2D3436; --text:#3D3D3D; --muted:#999;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 10% 20%,rgba(108,99,255,0.09) 0%,transparent 40%),
+    radial-gradient(circle at 90% 15%,rgba(162,155,254,0.09) 0%,transparent 40%),
+    radial-gradient(circle at 50% 85%,rgba(255,159,67,0.07) 0%,transparent 40%);
+}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:var(--white);border-bottom:3px solid var(--purple);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:60px;box-shadow:0 4px 0 rgba(162,155,254,0.15);}
+.nav-brand{font-family:'Fredoka One',cursive;font-size:1.1rem;color:var(--indigo);}
+.nav-back{font-size:13px;font-weight:700;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-back:hover{color:var(--purple);}
+.nav-pills{display:flex;gap:6px;}
+.nav-pill{font-family:'Nunito',sans-serif;font-weight:700;font-size:13px;padding:6px 14px;border-radius:50px;border:2.5px solid transparent;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.2s;}
+.nav-pill:hover{background:#F4F2FF;color:var(--purple);border-color:var(--purple);}
+.nav-pill.active{background:var(--purple);color:white;border-color:var(--purple);}
+
+/* HERO */
+.hero{position:relative;z-index:1;padding:4rem 2rem 2.5rem;max-width:900px;margin:0 auto;text-align:center;}
+.floaties{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.floaty{position:absolute;font-size:2rem;opacity:0.5;animation:float 4s ease-in-out infinite;}
+.floaty:nth-child(1){top:8%;left:4%;animation-delay:0s;}
+.floaty:nth-child(2){top:14%;right:5%;animation-delay:0.7s;}
+.floaty:nth-child(3){top:58%;left:2%;animation-delay:1.3s;}
+.floaty:nth-child(4){top:52%;right:3%;animation-delay:0.4s;}
+.floaty:nth-child(5){top:78%;left:6%;animation-delay:1.8s;}
+.floaty:nth-child(6){top:72%;right:6%;animation-delay:1s;}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(4deg)}}
+
+.hero-badge{display:inline-block;background:var(--purple);color:white;font-weight:800;font-size:12px;border-radius:50px;padding:5px 18px;margin-bottom:1.2rem;letter-spacing:0.06em;box-shadow:3px 3px 0 rgba(162,155,254,0.3);}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,7vw,4rem);line-height:1.1;color:var(--dark);margin-bottom:0.6rem;}
+.hero h1 .c1{color:var(--purple);} .hero h1 .c2{color:var(--orange);}
+.hero p{font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto 2rem;line-height:1.7;}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+.hero-pill{background:var(--white);border-radius:50px;padding:8px 18px;font-size:13px;font-weight:700;border:2.5px solid;box-shadow:3px 3px 0 rgba(0,0,0,0.07);}
+.hp1{border-color:var(--purple);color:var(--purple);} .hp2{border-color:var(--orange);color:var(--orange);} .hp3{border-color:var(--teal);color:var(--teal);}
+
+/* FACTORY SCENE */
+.factory-wrap{max-width:860px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:1;}
+.factory-card{background:var(--white);border-radius:28px;border:3px solid var(--purple);padding:1.5rem 1.5rem 1rem;box-shadow:6px 6px 0 rgba(162,155,254,0.2);position:relative;overflow:hidden;}
+.factory-card::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--purple),var(--indigo),var(--orange),var(--mint),var(--purple));}
+.factory-hint{text-align:center;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:1rem;}
+
+/* SECTIONS */
+section{max-width:900px;margin:0 auto;padding:3rem 1.5rem;scroll-margin-top:68px;position:relative;z-index:1;}
+.s-chip{display:inline-block;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:4px 14px;border-radius:50px;margin-bottom:0.6rem;}
+.ch-purple{background:#EDE9FF;color:#6C63FF;} .ch-orange{background:#FFF0E0;color:#C97010;} .ch-teal{background:#E0F8F4;color:#007A6A;}
+.s-title{font-family:'Fredoka One',cursive;font-size:2rem;color:var(--dark);margin-bottom:1.8rem;}
+
+/* CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;}
+.comp-card{background:var(--white);border-radius:22px;border:3px solid transparent;padding:1.4rem;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
+.comp-card:hover{transform:translateY(-4px) rotate(-0.5deg);}
+.comp-card.active{transform:translateY(-2px);}
+.cc1{border-color:var(--purple);box-shadow:5px 5px 0 rgba(162,155,254,0.2);}
+.cc2{border-color:var(--indigo);box-shadow:5px 5px 0 rgba(108,99,255,0.2);}
+.cc3{border-color:var(--orange);box-shadow:5px 5px 0 rgba(255,159,67,0.2);}
+.cc4{border-color:var(--teal);box-shadow:5px 5px 0 rgba(0,184,148,0.2);}
+.cc5{border-color:var(--mint);box-shadow:5px 5px 0 rgba(107,203,119,0.2);}
+.cc6{border-color:var(--sky);box-shadow:5px 5px 0 rgba(78,205,196,0.2);}
+.cc7{border-color:var(--red);box-shadow:5px 5px 0 rgba(255,107,107,0.2);}
+.cc8{border-color:var(--pink);box-shadow:5px 5px 0 rgba(255,107,157,0.2);}
+.cc1.active{background:#F4F2FF;} .cc2.active{background:#EEEEFF;} .cc3.active{background:#FFF5EC;}
+.cc4.active{background:#E8FBF8;} .cc5.active{background:#F0FBF1;} .cc6.active{background:#F0FFFE;}
+.cc7.active{background:#FFF0F0;} .cc8.active{background:#FFF0F6;}
+
+.card-icon{font-size:2.4rem;margin-bottom:0.7rem;display:block;}
+.card-title{font-family:'Fredoka One',cursive;font-size:1.15rem;color:var(--dark);margin-bottom:2px;}
+.card-sub{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:0.6rem;}
+.cs1{color:var(--purple);} .cs2{color:var(--indigo);} .cs3{color:var(--orange);} .cs4{color:var(--teal);}
+.cs5{color:var(--mint);} .cs6{color:var(--sky);} .cs7{color:var(--red);} .cs8{color:var(--pink);}
+.card-desc{font-size:13.5px;color:var(--muted);line-height:1.55;}
+
+/* DETAIL PANEL */
+.detail-panel{display:none;margin-top:1.2rem;background:var(--white);border-radius:24px;border:3px solid var(--purple);padding:2rem;animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275);box-shadow:6px 6px 0 rgba(162,155,254,0.15);}
+.detail-panel.visible{display:block;}
+@keyframes popIn{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.d-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.2rem;border-bottom:2px dashed var(--purple);}
+.d-icon{font-size:3rem;} .d-name{font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--dark);} .d-eng{font-size:13px;font-weight:700;color:var(--purple);}
+.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
+@media(max-width:600px){.d-grid{grid-template-columns:1fr}}
+.d-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.5rem;}
+.analogy-box{background:linear-gradient(135deg,#F4F2FF,#FFF5EC);border:2px solid var(--purple);border-radius:16px;padding:1.2rem 1.1rem;font-size:14px;line-height:1.7;color:var(--text);position:relative;margin-top:1.2rem;}
+.analogy-box::before{content:'🏭';position:absolute;top:-13px;left:12px;font-size:1.4rem;}
+.why-box{background:linear-gradient(135deg,#E8FBF8,#F0FBF1);border:2px solid var(--teal);border-radius:16px;padding:1rem 1.1rem;font-size:14px;line-height:1.7;color:var(--text);margin-top:0.4rem;}
+.q-box{background:linear-gradient(135deg,#FFF5EC,#F4F2FF);border:2px solid var(--orange);border-radius:16px;padding:1rem 1.1rem;font-size:14px;line-height:1.7;color:var(--text);margin-top:1rem;}
+.tags-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem;}
+.tag{font-size:12px;font-weight:700;padding:4px 12px;border-radius:50px;background:#F4F2FF;color:var(--purple);border:2px solid #D4CFFF;}
+
+/* QUIZ */
+.quiz-outer{background:linear-gradient(135deg,#6C63FF 0%,#A29BFE 100%);border-radius:28px;padding:2.5rem;box-shadow:8px 8px 0 rgba(108,99,255,0.25);position:relative;overflow:hidden;}
+.quiz-outer::after{content:'☁️';position:absolute;top:1.2rem;right:1.5rem;font-size:2.2rem;opacity:0.3;animation:float 3s ease-in-out infinite;}
+.quiz-outer .s-chip{background:rgba(255,255,255,0.2);color:white;}
+.quiz-outer .s-title{color:white;}
+.quiz-q{font-size:1.05rem;font-weight:700;color:white;line-height:1.6;margin-bottom:1.4rem;background:rgba(255,255,255,0.1);border-radius:16px;padding:1rem 1.2rem;}
+.quiz-opts{display:grid;gap:10px;}
+.quiz-opt{background:rgba(255,255,255,0.12);border:2.5px solid rgba(255,255,255,0.25);border-radius:14px;padding:0.9rem 1.2rem;cursor:pointer;font-size:14px;font-weight:600;color:white;transition:all 0.18s;text-align:left;font-family:'Nunito',sans-serif;}
+.quiz-opt:hover{background:rgba(255,255,255,0.22);border-color:var(--yellow);transform:translateX(4px);}
+.quiz-opt.correct{background:rgba(107,203,119,0.3);border-color:var(--mint);}
+.quiz-opt.wrong{background:rgba(255,107,107,0.3);border-color:var(--red);}
+.quiz-fb{display:none;margin-top:1rem;border-radius:14px;padding:0.9rem 1.2rem;font-size:14px;font-weight:600;line-height:1.6;}
+.quiz-fb.show{display:block;}
+.quiz-fb.good{background:rgba(107,203,119,0.2);border:2px solid var(--mint);color:#C8FFD4;}
+.quiz-fb.bad{background:rgba(255,107,107,0.2);border:2px solid var(--red);color:#FFD6D6;}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;margin-top:1.4rem;}
+.quiz-prog{font-size:13px;font-weight:700;color:rgba(255,255,255,0.5);}
+.btn{background:var(--yellow);color:var(--dark);border:none;border-radius:50px;padding:0.65rem 1.6rem;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:transform 0.15s,box-shadow 0.15s;box-shadow:3px 3px 0 rgba(0,0,0,0.15);}
+.btn:hover{transform:translateY(-2px);box-shadow:4px 5px 0 rgba(0,0,0,0.15);}
+.btn:disabled{opacity:0.35;cursor:default;transform:none;}
+.done-inner{text-align:center;padding:1rem 0;}
+.done-emoji{font-size:4rem;margin-bottom:0.8rem;display:block;animation:float 2s ease-in-out infinite;}
+.done-inner h3{font-family:'Fredoka One',cursive;font-size:1.8rem;color:white;margin-bottom:0.4rem;}
+.done-inner p{color:rgba(255,255,255,0.7);font-size:14px;font-weight:600;margin-bottom:1.5rem;}
+
+/* TABLE */
+.resumen-wrap{background:var(--white);border-radius:24px;overflow:hidden;border:3px solid var(--purple);box-shadow:6px 6px 0 rgba(162,155,254,0.18);}
+.resumen-table{width:100%;border-collapse:collapse;font-size:14px;}
+.resumen-table thead tr{background:linear-gradient(90deg,var(--purple),var(--indigo));}
+.resumen-table th{text-align:left;padding:12px 16px;color:white;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;}
+.resumen-table td{padding:12px 16px;border-bottom:2px dashed #EDE9FF;vertical-align:top;}
+.resumen-table tr:last-child td{border-bottom:none;}
+.resumen-table tr:nth-child(even) td{background:#F9F8FF;}
+.en{display:inline-block;font-family:monospace;font-size:12px;background:#EDE9FF;color:var(--purple);border-radius:6px;padding:2px 7px;font-weight:700;}
+
+/* NAV BOTTOM */
+.nav-bloques{max-width:900px;margin:0 auto;padding:0 1.5rem 3rem;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+.nav-bloque-btn{display:inline-flex;align-items:center;gap:8px;padding:0.7rem 1.6rem;border-radius:50px;font-size:14px;font-weight:800;font-family:'Nunito',sans-serif;text-decoration:none;transition:transform 0.15s,box-shadow 0.15s;box-shadow:3px 3px 0 rgba(0,0,0,0.1);}
+.nav-bloque-btn:hover{transform:translateY(-2px);}
+.btn-prev{background:var(--white);color:var(--dark);border:2.5px solid var(--purple);}
+.btn-home{background:var(--yellow);color:var(--dark);box-shadow:3px 3px 0 rgba(255,217,61,0.35);}
+
+/* SPECIAL: INTEGRATION CARD */
+.integration-card{background:linear-gradient(135deg,#2D3436,#636e72);border-radius:24px;padding:2rem;margin-top:2rem;border:3px solid var(--yellow);box-shadow:6px 6px 0 rgba(255,217,61,0.2);}
+.integration-card h3{font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--yellow);margin-bottom:0.8rem;}
+.integration-card p{font-size:14px;color:rgba(255,255,255,0.8);line-height:1.7;margin-bottom:1rem;}
+.integration-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:600px){.integration-steps{grid-template-columns:1fr;}}
+.int-step{background:rgba(255,255,255,0.08);border-radius:14px;padding:1rem;text-align:center;border:1px solid rgba(255,255,255,0.15);}
+.int-step-icon{font-size:2rem;margin-bottom:0.5rem;display:block;}
+.int-step-title{font-family:'Fredoka One',cursive;font-size:1rem;margin-bottom:0.3rem;}
+.int-step-sub{font-size:12px;color:rgba(255,255,255,0.6);font-weight:600;}
+
+footer{position:relative;z-index:1;text-align:center;padding:2.5rem 1.5rem;background:var(--dark);color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;}
+footer span{color:var(--purple);}
+
+@media(max-width:640px){.nav-pills{display:none}.hero{padding:3rem 1.2rem 2rem}section{padding:2rem 1.2rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">☁️ Pandix — La Cocina Digital</span>
+  <div class="nav-pills">
+    <button class="nav-pill active" data-section="fabrica"     onclick="goTo('fabrica')">🏭 La fábrica</button>
+    <button class="nav-pill"        data-section="componentes" onclick="goTo('componentes')">🧩 Componentes</button>
+    <button class="nav-pill"        data-section="quiz"        onclick="goTo('quiz')">⭐ Practica</button>
+    <button class="nav-pill"        data-section="resumen"     onclick="goTo('resumen')">📋 Resumen</button>
+  </div>
+  <a class="nav-back" href="index.html">← Inicio</a>
+</nav>
+
+<div class="hero">
+  <div class="floaties">
+    <span class="floaty">☁️</span><span class="floaty">🏭</span>
+    <span class="floaty">⚡</span><span class="floaty">🌐</span>
+    <span class="floaty">🔧</span><span class="floaty">✨</span>
+  </div>
+  <div class="hero-badge">☁️ Bloque 3 de 3</div>
+  <h1>La nube es una<br><span class="c1">fábrica</span> que <span class="c2">rentas</span> 🏭</h1>
+  <p>Virtualización, VMware, Nutanix, storage y cloud — todo explicado como una fábrica industrial de pasteles que puedes rentar por horas.</p>
+  <div class="hero-pills">
+    <span class="hero-pill hp1">🏭 9 conceptos</span>
+    <span class="hero-pill hp2">🧠 Analogía de fábrica</span>
+    <span class="hero-pill hp3">✅ Quiz integrador</span>
+  </div>
+</div>
+
+<!-- FACTORY SCENE -->
+<div class="factory-wrap" id="fabrica">
+  <div class="factory-card">
+    <p class="factory-hint">👆 ¡Toca cada parte de la fábrica para aprender más!</p>
+    <svg width="100%" viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg" style="display:block">
+
+      <!-- Factory building -->
+      <rect x="30" y="50" width="520" height="220" rx="10" fill="#F4F2FF"/>
+      <rect x="30" y="50" width="520" height="32" rx="10" fill="#6C63FF"/>
+      <text x="290" y="73" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="14" fill="white">🏭 Tu datacenter — Servidor físico (Host)</text>
+
+      <!-- Physical server lines / slots -->
+      <rect x="50" y="100" width="480" height="16" rx="4" fill="#E0DCFF"/>
+      <rect x="50" y="122" width="480" height="16" rx="4" fill="#E0DCFF"/>
+      <rect x="50" y="144" width="480" height="16" rx="4" fill="#E0DCFF"/>
+
+      <!-- Hypervisor bar -->
+      <rect x="50" y="168" width="480" height="22" rx="6" fill="#A29BFE"/>
+      <text x="290" y="183" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="11" fill="white">Hipervisor (VMware ESXi / Nutanix AHV)</text>
+
+      <!-- VMs -->
+      <g onclick="showDetail('vm')" style="cursor:pointer">
+        <rect x="55" y="198" width="140" height="58" rx="10" fill="#FF6B9D" opacity="0.9"/>
+        <text x="125" y="221" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="11" fill="white">VM 1</text>
+        <text x="125" y="236" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" font-weight="700" fill="rgba(255,255,255,0.8)">Linux · 4 CPU · 8GB</text>
+        <text x="125" y="249" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" fill="rgba(255,255,255,0.7)">Web server</text>
+      </g>
+      <g onclick="showDetail('vm')" style="cursor:pointer">
+        <rect x="205" y="198" width="140" height="58" rx="10" fill="#4ECDC4" opacity="0.9"/>
+        <text x="275" y="221" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="11" fill="white">VM 2</text>
+        <text x="275" y="236" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" font-weight="700" fill="rgba(255,255,255,0.8)">Linux · 8 CPU · 16GB</text>
+        <text x="275" y="249" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" fill="rgba(255,255,255,0.7)">Base de datos</text>
+      </g>
+      <g onclick="showDetail('vm')" style="cursor:pointer">
+        <rect x="355" y="198" width="140" height="58" rx="10" fill="#FF9F43" opacity="0.9"/>
+        <text x="425" y="221" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="11" fill="white">VM 3</text>
+        <text x="425" y="236" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" font-weight="700" fill="rgba(255,255,255,0.8)">Windows · 2 CPU · 4GB</text>
+        <text x="425" y="249" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" fill="rgba(255,255,255,0.7)">App interna</text>
+      </g>
+
+      <!-- Storage -->
+      <g onclick="showDetail('storage')" style="cursor:pointer">
+        <rect x="568" y="95" width="110" height="130" rx="12" fill="#00B894"/>
+        <rect x="576" y="105" width="94" height="35" rx="6" fill="#E0F8F4"/>
+        <rect x="576" y="148" width="94" height="35" rx="6" fill="#E0F8F4"/>
+        <rect x="576" y="191" width="94" height="24" rx="6" fill="#E0F8F4"/>
+        <text x="623" y="127" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="10" fill="#007A6A">💾 NAS</text>
+        <text x="623" y="170" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="10" fill="#007A6A">💾 SAN</text>
+        <text x="623" y="207" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="10" fill="#007A6A">Backup</text>
+        <text x="623" y="243" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="13" fill="#007A6A">Storage</text>
+        <text x="623" y="258" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="10" font-weight="700" fill="#AAA">El almacén 🗄️</text>
+      </g>
+
+      <!-- Lines storage to VMs -->
+      <line x1="568" y1="160" x2="530" y2="230" stroke="#00B894" stroke-width="2" stroke-dasharray="5,3"/>
+
+      <!-- Cloud -->
+      <g onclick="showDetail('cloud')" style="cursor:pointer">
+        <ellipse cx="710" cy="155" rx="72" ry="50" fill="#EDE9FF" stroke="#6C63FF" stroke-width="2.5" stroke-dasharray="6,4"/>
+        <text x="710" y="145" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="12" fill="#6C63FF">☁️ Cloud</text>
+        <text x="710" y="161" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" font-weight="700" fill="#6C63FF">AWS / Azure / GCP</text>
+        <text x="710" y="175" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" fill="#9B8FEE">IaaS · PaaS · SaaS</text>
+      </g>
+      <line x1="550" y1="155" x2="638" y2="155" stroke="#6C63FF" stroke-width="2" stroke-dasharray="5,3"/>
+
+      <text x="400" y="320" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="12" font-weight="700" fill="#CCC">✨ Toca cualquier elemento para ver la explicación ✨</text>
+    </svg>
+  </div>
+</div>
+
+<!-- COMPONENTS -->
+<section id="componentes">
+  <div class="s-chip ch-purple">🧩 Los elementos de la fábrica</div>
+  <div class="s-title">¿Qué hay en la nube? 🔍</div>
+  <div class="cards-grid">
+    <div class="comp-card cc1" id="card-vm"          onclick="showDetail('vm')"><span class="card-icon">🏠</span><div class="card-title">VM — Máquina Virtual</div><div class="card-sub cs1">El compartimento del horno</div><div class="card-desc">Una máquina completa que vive dentro de otra. Tiene su propio OS, CPU, RAM y disco.</div></div>
+    <div class="comp-card cc2" id="card-hypervisor"  onclick="showDetail('hypervisor')"><span class="card-icon">🎛️</span><div class="card-title">Hipervisor</div><div class="card-sub cs2">El maestro de la fábrica</div><div class="card-desc">El software que divide el hardware físico y crea las VMs. VMware ESXi, Nutanix AHV.</div></div>
+    <div class="comp-card cc3" id="card-vmware"      onclick="showDetail('vmware')"><span class="card-icon">🏢</span><div class="card-title">VMware</div><div class="card-sub cs3">La marca líder</div><div class="card-desc">La plataforma de virtualización empresarial más usada en el mundo. ESXi + vCenter.</div></div>
+    <div class="comp-card cc4" id="card-nutanix"     onclick="showDetail('nutanix')"><span class="card-icon">🔧</span><div class="card-title">Nutanix</div><div class="card-sub cs4">La fábrica todo-en-uno</div><div class="card-desc">Infraestructura hiperconvergente (HCI) — servidor, storage y red en un solo sistema.</div></div>
+    <div class="comp-card cc5" id="card-storage"     onclick="showDetail('storage')"><span class="card-icon">🗄️</span><div class="card-title">Storage — NAS / SAN</div><div class="card-sub cs5">El almacén central</div><div class="card-desc">Almacenamiento compartido a escala empresarial. El corazón de la infraestructura.</div></div>
+    <div class="comp-card cc6" id="card-cloud"       onclick="showDetail('cloud')"><span class="card-icon">☁️</span><div class="card-title">Cloud Computing</div><div class="card-sub cs6">La fábrica que rentas</div><div class="card-desc">IaaS, PaaS y SaaS — infraestructura bajo demanda de AWS, Azure o Google Cloud.</div></div>
+    <div class="comp-card cc7" id="card-contenedor"  onclick="showDetail('contenedor')"><span class="card-icon">🧁</span><div class="card-title">Contenedores</div><div class="card-sub cs7">El cupcake empaquetado</div><div class="card-desc">Apps portátiles y ligeras. Docker los crea, Kubernetes los coordina a escala.</div></div>
+    <div class="comp-card cc8" id="card-ha"          onclick="showDetail('ha')"><span class="card-icon">🛡️</span><div class="card-title">HA y Disaster Recovery</div><div class="card-sub cs8">El seguro de la fábrica</div><div class="card-desc">Alta disponibilidad y recuperación ante desastres — el plan cuando todo falla.</div></div>
+  </div>
+  <div class="detail-panel" id="detail-panel"></div>
+
+  <!-- INTEGRATION CARD -->
+  <div class="integration-card">
+    <h3>🌟 Los 3 bloques conectados</h3>
+    <p>Cuando abres Netflix, los 3 bloques de Pandix Kitchen trabajan juntos en fracciones de segundo:</p>
+    <div class="integration-steps">
+      <div class="int-step">
+        <span class="int-step-icon">🍳</span>
+        <div class="int-step-title" style="color:var(--pink)">Bloque 1</div>
+        <div class="int-step-sub">Tu dispositivo — CPU, RAM y OS procesan tu clic</div>
+      </div>
+      <div class="int-step">
+        <span class="int-step-icon">🏫</span>
+        <div class="int-step-title" style="color:var(--sky)">Bloque 2</div>
+        <div class="int-step-sub">La red — DNS, router y protocolos llevan tu petición</div>
+      </div>
+      <div class="int-step">
+        <span class="int-step-icon">🏭</span>
+        <div class="int-step-title" style="color:var(--purple)">Bloque 3</div>
+        <div class="int-step-sub">La fábrica — VMs en AWS entregan la película</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="quiz-outer">
+    <div class="s-chip">🌟 Practica lo que aprendiste</div>
+    <div class="s-title">Quiz integrador ✏️</div>
+    <div id="quiz-main">
+      <div class="quiz-q" id="quiz-q"></div>
+      <div class="quiz-opts" id="quiz-opts"></div>
+      <div class="quiz-fb" id="quiz-fb"></div>
+      <div class="quiz-nav">
+        <span class="quiz-prog" id="quiz-prog"></span>
+        <button class="btn" id="quiz-next" onclick="nextQ()" disabled>Siguiente →</button>
+      </div>
+    </div>
+    <div id="quiz-done" style="display:none">
+      <div class="done-inner">
+        <span class="done-emoji">🎂</span>
+        <h3>¡Propedéutico completado!</h3>
+        <p id="quiz-score-txt"></p>
+        <button class="btn" onclick="restartQuiz()">🔄 Repetir quiz</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="s-chip ch-teal">📋 Para no olvidar</div>
+  <div class="s-title">La fábrica completa 🗺️</div>
+  <div class="resumen-wrap">
+    <table class="resumen-table">
+      <thead><tr><th>🧩 Concepto</th><th>🏭 En la fábrica</th><th>💡 Función clave</th><th>🇺🇸 En inglés</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Máquina virtual</strong></td><td>Compartimento del horno</td><td>Máquina completa dentro de otra</td><td><span class="en">VM / Virtual Machine</span></td></tr>
+        <tr><td><strong>Hipervisor</strong></td><td>Maestro de la fábrica</td><td>Divide hardware en VMs</td><td><span class="en">Hypervisor / ESXi / AHV</span></td></tr>
+        <tr><td><strong>VMware</strong></td><td>La marca líder de fábricas</td><td>Plataforma de virtualización empresarial</td><td><span class="en">VMware / vSphere / vCenter</span></td></tr>
+        <tr><td><strong>Nutanix</strong></td><td>La fábrica todo-en-uno</td><td>HCI: servidor + storage + red integrados</td><td><span class="en">Nutanix / HCI / Prism</span></td></tr>
+        <tr><td><strong>Storage</strong></td><td>El almacén central</td><td>Datos compartidos a escala empresarial</td><td><span class="en">NAS / SAN / Storage</span></td></tr>
+        <tr><td><strong>IaaS</strong></td><td>Rentar espacio y hornos vacíos</td><td>Infraestructura bajo demanda</td><td><span class="en">IaaS / AWS EC2 / Azure VM</span></td></tr>
+        <tr><td><strong>SaaS</strong></td><td>Pedir pasteles ya terminados</td><td>Software listo en internet</td><td><span class="en">SaaS / Gmail / Netflix / Office 365</span></td></tr>
+        <tr><td><strong>Contenedor</strong></td><td>El cupcake empaquetado</td><td>App portable y ligera</td><td><span class="en">Container / Docker / Kubernetes</span></td></tr>
+        <tr><td><strong>Alta disponibilidad</strong></td><td>Siempre dos chefs por estación</td><td>El servicio nunca para</td><td><span class="en">HA / High Availability / Failover</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- NAV BETWEEN BLOCKS -->
+<div class="nav-bloques">
+  <a class="nav-bloque-btn btn-prev" href="bloque2_redes.html">← Bloque 2: Las redes</a>
+  <a class="nav-bloque-btn btn-home" href="index.html">🏠 Página principal</a>
+</div>
+
+<footer>
+  <p>☁️ <span>Pandix — La Cocina Digital</span> · Bloque 3 de 3 · ¡Propedéutico completado! 🎂</p>
+  <p style="margin-top:0.4rem">Siguiente etapa: <span>Linux en práctica 🐧</span></p>
+</footer>
+
+<script>
+const comps={
+  vm:{icon:'🏠',name:'VM — Máquina Virtual',eng:'Virtual Machine',
+    analogy:'Tienes un horno industrial gigante con capacidad para 500 cupcakes. En lugar de usarlo para un solo sabor, lo divides en 20 compartimentos separados — cada uno con su temperatura, timer y receta independientes. Para cada compartimento, es como si tuviera su propio horno completo. Eso es una VM.',
+    detail:'Cada VM tiene su propio OS (Linux o Windows), CPU asignado, RAM asignada y disco. Las VMs no saben que comparten hardware con otras — cada una cree que es la dueña de toda la máquina.',
+    why:'En lugar de comprar un servidor por cada aplicación, virtualizas y metes 20 aplicaciones en un solo servidor. Menos hardware, menos costo, más flexibilidad.',
+    q:'Si tienes un servidor con 64 núcleos de CPU y 512 GB de RAM, ¿cuántas VMs con 4 núcleos y 16 GB podrías crear teóricamente?',
+    tags:['VM','Virtual Machine','OS invitado','Guest','Host','Snapshot'],bc:'var(--purple)'},
+  hypervisor:{icon:'🎛️',name:'Hipervisor',eng:'Hypervisor / VMware ESXi / Nutanix AHV',
+    analogy:'El maestro de la fábrica que divide los hornos y asigna cada compartimento. Él sabe exactamente cuánta capacidad tiene cada horno, cuánto le toca a cada VM, y se asegura de que ninguna tome más de lo que le corresponde.',
+    detail:'Tipo 1 (bare metal) corre directo sobre el hardware — más eficiente, para empresas. Ejemplos: VMware ESXi, Nutanix AHV. Tipo 2 corre dentro de un OS — más fácil de instalar, para aprender. Ejemplos: VirtualBox, VMware Workstation.',
+    why:'Sin hipervisor, tendrías que dedicar un servidor físico completo a cada aplicación. Con él, un solo servidor físico puede hacer el trabajo de veinte.',
+    q:'¿Por qué las empresas usan hipervisor Tipo 1 y no Tipo 2? ¿Qué se gana con el Tipo 1?',
+    tags:['Hypervisor','ESXi','AHV','Bare metal','Tipo 1','Tipo 2','VirtualBox'],bc:'var(--indigo)'},
+  vmware:{icon:'🏢',name:'VMware — La plataforma líder',eng:'VMware vSphere / ESXi / vCenter',
+    analogy:'VMware es como la marca más famosa y confiable de fábricas industriales. La que tiene más años, más clientes, más certificaciones. Cuando una empresa grande dice "tenemos infraestructura de virtualización", casi siempre es VMware.',
+    detail:'ESXi es el hipervisor que corre en cada servidor físico. vCenter es la consola central desde donde administras todos los ESXi de la empresa en una sola pantalla. vMotion permite mover una VM en vivo entre servidores sin apagarla.',
+    why:'VMware es el estándar de la industria. Saber administrar VMware es una habilidad muy solicitada y bien pagada en IT.',
+    q:'¿Por qué es útil poder mover una VM de un servidor a otro sin apagarla (vMotion)?',
+    tags:['VMware','ESXi','vCenter','vSphere','vMotion','Snapshot','HA'],bc:'var(--orange)'},
+  nutanix:{icon:'🔧',name:'Nutanix — HCI',eng:'Nutanix / Hyper-Converged Infrastructure',
+    analogy:'En lugar de tener la cocina en un cuarto, la alacena en otro y el área de lavado en otro más, Nutanix mete todo en una sola estación de trabajo compacta e inteligente. Y si necesitas más capacidad, solo agregas otra estación igual — el sistema crece solo.',
+    detail:'HCI (Hyper-Converged Infrastructure) combina servidores, storage y red en nodos que trabajan juntos como un clúster. Prism es la interfaz de administración — simple y visual. Nutanix AHV es su hipervisor integrado.',
+    why:'Nutanix simplifica la infraestructura dramáticamente. Menos equipos separados, menos cables, menos complejidad. Cada vez más popular en empresas medianas y grandes.',
+    q:'¿Qué ventaja tiene Nutanix sobre una arquitectura tradicional con servidores, storage y red por separado?',
+    tags:['Nutanix','HCI','Nodo (node)','Clúster (cluster)','Prism','AHV'],bc:'var(--teal)'},
+  storage:{icon:'🗄️',name:'Storage — NAS y SAN',eng:'Storage / NAS / SAN / DAS',
+    analogy:'La alacena central que todas las chefs de la fábrica pueden usar. NAS es como una alacena abierta accesible por los pasillos de la red. SAN son túneles subterráneos privados y ultrarrápidos que conectan la alacena directamente con cada estación de trabajo.',
+    detail:'DAS = disco propio del servidor (alacena personal). NAS = almacenamiento compartido por red normal (accesible por todas las VMs). SAN = red dedicada solo para storage, ultra rápida, para bases de datos y apps críticas.',
+    why:'En virtualización, el storage compartido es fundamental — permite que las VMs sean accesibles desde diferentes hosts físicos y que funcionen HA y vMotion.',
+    q:'¿Por qué una base de datos crítica usa SAN en lugar de NAS? ¿Qué gana con SAN?',
+    tags:['Storage','NAS','SAN','DAS','RAID','IOPS','Backup','Snapshot'],bc:'var(--mint)'},
+  cloud:{icon:'☁️',name:'Cloud Computing',eng:'Cloud / AWS / Azure / GCP / IaaS / PaaS / SaaS',
+    analogy:'Imagina que en lugar de construir tu propia fábrica de pasteles, rentas espacio en una fábrica industrial gigantesca que ya existe. Pagas solo por lo que usas — los hornos que necesitas, por el tiempo que los necesitas. Si hay más pedidos, pides más hornos. Si baja la demanda, devuelves los que sobran.',
+    detail:'IaaS = rentas servidores, red y storage (tú pones el OS y todo lo demás). PaaS = plataforma ya configurada para desarrollar. SaaS = software directo desde internet, sin instalar nada. Los 3 grandes: AWS (Amazon), Azure (Microsoft), GCP (Google).',
+    why:'El cloud eliminó la necesidad de comprar y mantener hardware propio para muchas empresas. Escalas en minutos, pagas solo lo que usas.',
+    q:'Gmail, AWS EC2 y Heroku — ¿cuál es IaaS, cuál es PaaS y cuál es SaaS?',
+    tags:['Cloud','AWS','Azure','GCP','IaaS','PaaS','SaaS','On-premise'],bc:'var(--sky)'},
+  contenedor:{icon:'🧁',name:'Contenedores — Docker',eng:'Container / Docker / Kubernetes',
+    analogy:'Si una VM es un horno completo con su propio sistema de gas y temperatura, un contenedor es un cupcake individual perfectamente empaquetado — listo para entregarse, sin necesitar el horno completo. Ligero, portátil, y puedes hacer miles al mismo tiempo.',
+    detail:'Los contenedores empaquetan la app y todo lo que necesita sin un OS completo — comparten el OS del host. Docker crea los contenedores. Kubernetes los coordina cuando hay miles en producción.',
+    why:'Los contenedores hacen que las apps sean portátiles — funcionan igual en tu laptop, en un servidor de prueba o en producción en AWS. Revolucionaron la forma de desarrollar y entregar software.',
+    q:'¿Por qué un contenedor arranca en segundos y una VM puede tardar minutos?',
+    tags:['Container','Docker','Kubernetes','Pod','Imagen (image)','K8s'],bc:'var(--red)'},
+  ha:{icon:'🛡️',name:'HA y Disaster Recovery',eng:'High Availability / Disaster Recovery',
+    analogy:'HA es tener siempre dos chefs por estación — si una se enferma, la otra continúa sin que nadie note la diferencia. DR es tener una segunda fábrica completa en otra ciudad, lista para arrancar si la principal tiene un incendio. HA es para fallas pequeñas, DR es para catástrofes.',
+    detail:'HA garantiza que un servicio esté activo casi el 100% del tiempo. Si un servidor físico falla, las VMs migran automáticamente a otro en segundos. DR es el plan completo: backups, sitios alternos, procedimientos documentados para recuperarse de un desastre.',
+    why:'Para una empresa de e-commerce, una hora caída puede significar millones de pesos perdidos. HA y DR no son lujos — son seguros de negocio.',
+    q:'¿Cuántas horas al año puede fallar un sistema con disponibilidad del 99.9%? ¿Y uno con 99.999%?',
+    tags:['HA','DR','Failover','Backup','RTO','RPO','Cluster','Redundancia'],bc:'var(--pink)'}
+};
+
+function showDetail(key){
+  document.querySelectorAll('.comp-card').forEach(c=>c.classList.remove('active'));
+  const card=document.getElementById('card-'+key);if(card)card.classList.add('active');
+  const d=comps[key],panel=document.getElementById('detail-panel');
+  panel.style.borderColor=d.bc;panel.style.boxShadow=`6px 6px 0 ${d.bc}33`;
+  panel.innerHTML=`
+    <div class="d-header">
+      <span class="d-icon">${d.icon}</span>
+      <div><div class="d-name">${d.name}</div><div class="d-eng">${d.eng}</div></div>
+    </div>
+    <div class="d-grid">
+      <div>
+        <div class="d-label">🏭 En la fábrica de pasteles</div>
+        <div class="analogy-box">${d.analogy}</div>
+        <div style="margin-top:1rem"><div class="d-label">💡 Un poco más</div>
+        <p style="font-size:14px;line-height:1.7;margin-top:0.4rem;color:var(--text)">${d.detail}</p></div>
+      </div>
+      <div>
+        <div class="d-label">🏢 ¿Por qué importa en IT?</div>
+        <div class="why-box">${d.why}</div>
+        <div class="q-box">🤔 <strong>Para reflexionar:</strong> ${d.q}</div>
+        <div class="tags-row">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`;
+  panel.classList.add('visible');
+  setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+// QUIZ
+const qData=[
+  {q:'Un servidor físico tiene 64 núcleos de CPU. Lo virtualizas con hipervisor. ¿Qué representa el hipervisor en la analogía de la fábrica?',
+   opts:['Los compartimentos del horno','El maestro que divide y asigna los hornos','El almacén central','La fábrica que rentas por horas'],c:1,
+   good:'¡Exacto! 🎛️ El hipervisor es el maestro que divide el hardware y asigna recursos a cada VM.',
+   bad:'El hipervisor = el maestro de la fábrica. No es un compartimento (eso es la VM) ni el almacén (eso es el storage).'},
+  {q:'¿Cuál es la diferencia principal entre una VM y un contenedor?',
+   opts:['Las VMs son más baratas','La VM tiene su propio OS completo; el contenedor comparte el OS del host','Los contenedores solo funcionan en Linux','No hay diferencia real'],c:1,
+   good:'¡Correcto! 🧁 La VM = horno completo con su propio sistema. El contenedor = cupcake que comparte el horno.',
+   bad:'La clave: la VM tiene su propio OS completo (más pesada, más aislada). El contenedor comparte el OS del host (más ligero, más rápido de arrancar).'},
+  {q:'Gmail, Netflix y AWS EC2 — ¿cuál es un ejemplo de IaaS?',
+   opts:['Gmail','Netflix','AWS EC2','Los tres son IaaS'],c:2,
+   good:'¡Perfecto! ☁️ AWS EC2 es IaaS — rentas servidores virtuales y tú decides qué poner encima. Gmail y Netflix son SaaS.',
+   bad:'AWS EC2 = IaaS (rentas infraestructura). Gmail y Netflix = SaaS (usas el software directo, sin instalar nada ni administrar servidores).'},
+  {q:'¿Qué es la Alta Disponibilidad (HA) en la analogía de la fábrica?',
+   opts:['Tener una fábrica en otra ciudad para emergencias','Tener siempre dos chefs por estación por si una falla','Hacer backups de todas las recetas','Rentar más hornos cuando hay más pedidos'],c:1,
+   good:'¡Exacto! 🛡️ HA = siempre hay respaldo listo. Si falla un componente, otro toma su lugar automáticamente.',
+   bad:'HA = dos chefs por estación. Si una falla, la otra sigue sin interrumpir el servicio. La fábrica alterna es DR (Disaster Recovery) — para catástrofes mayores.'},
+  {q:'¿Qué hace que Nutanix sea diferente de una arquitectura de TI tradicional?',
+   opts:['Es más barato siempre','Integra servidor, storage y red en un solo sistema hiperconvergente','Solo funciona con Linux','Reemplaza al cloud completamente'],c:1,
+   good:'¡Correcto! 🔧 Nutanix HCI integra todo en un solo sistema — menos complejidad, más eficiencia.',
+   bad:'Nutanix es HCI: combina servidor, storage y red en nodos integrados. Antes necesitabas tres sistemas separados para lo mismo.'}
+];
+let cQ=0,score=0,answered=false;
+function loadQ(){
+  const q=qData[cQ];
+  document.getElementById('quiz-q').textContent=q.q;
+  document.getElementById('quiz-prog').textContent=`Pregunta ${cQ+1} de ${qData.length}`;
+  const fb=document.getElementById('quiz-fb');fb.className='quiz-fb';fb.textContent='';
+  document.getElementById('quiz-next').disabled=true;answered=false;
+  const opts=document.getElementById('quiz-opts');opts.innerHTML='';
+  q.opts.forEach((o,i)=>{const b=document.createElement('button');b.className='quiz-opt';b.textContent=o;b.onclick=()=>answer(i);opts.appendChild(b);});
+}
+function answer(idx){
+  if(answered)return;answered=true;
+  const q=qData[cQ],btns=document.querySelectorAll('.quiz-opt');
+  btns[idx].classList.add(idx===q.c?'correct':'wrong');
+  if(idx!==q.c)btns[q.c].classList.add('correct');
+  const fb=document.getElementById('quiz-fb');
+  if(idx===q.c){score++;fb.textContent=q.good;fb.className='quiz-fb show good';}
+  else{fb.textContent=q.bad;fb.className='quiz-fb show bad';}
+  document.getElementById('quiz-next').disabled=false;
+}
+function nextQ(){
+  cQ++;
+  if(cQ>=qData.length){
+    document.getElementById('quiz-main').style.display='none';
+    document.getElementById('quiz-done').style.display='block';
+    document.getElementById('quiz-score-txt').textContent=`Respondiste ${score} de ${qData.length} correctamente 🌟`;
+  }else loadQ();
+}
+function restartQuiz(){cQ=0;score=0;document.getElementById('quiz-main').style.display='block';document.getElementById('quiz-done').style.display='none';loadQ();}
+
+// NAV
+function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});setActive(id);}
+function setActive(id){document.querySelectorAll('.nav-pill').forEach(p=>p.classList.remove('active'));const m=[...document.querySelectorAll('.nav-pill')].find(p=>p.dataset.section===id);if(m)m.classList.add('active');}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)setActive(e.target.id);});},{threshold:0.3,rootMargin:'-60px 0px -40% 0px'});
+['fabrica','componentes','quiz','resumen'].forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+loadQ();
+</script>
+</body>
+</html>
