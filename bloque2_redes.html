@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque 2 — ¿Cómo se conectan las computadoras? · Pandix Kitchen</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:   #FF6B9D; --yellow: #FFD93D; --mint:   #6BCB77;
+  --sky:    #4ECDC4; --orange: #FF9F43; --purple: #A29BFE;
+  --red:    #FF6B6B; --blue:   #74B9FF;
+  --bg:     #F0FFFE; --white:  #FFFFFF; --dark:   #2D3436;
+  --text:   #3D3D3D; --muted:  #999;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+body::before {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(78,205,196,0.09) 0%, transparent 40%),
+    radial-gradient(circle at 90% 15%, rgba(116,185,255,0.09) 0%, transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(162,155,254,0.07) 0%, transparent 40%);
+}
+
+/* NAV */
+nav {
+  position:sticky; top:0; z-index:200; background:var(--white);
+  border-bottom:3px solid var(--sky); padding:0 1.5rem;
+  display:flex; align-items:center; justify-content:space-between; height:60px;
+  box-shadow:0 4px 0 rgba(78,205,196,0.15);
+}
+.nav-brand { font-family:'Fredoka One',cursive; font-size:1.1rem; color:var(--sky); }
+.nav-back  { font-size:13px; font-weight:700; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+.nav-back:hover { color:var(--sky); }
+.nav-pills { display:flex; gap:6px; }
+.nav-pill {
+  font-family:'Nunito',sans-serif; font-weight:700; font-size:13px;
+  padding:6px 14px; border-radius:50px; border:2.5px solid transparent;
+  cursor:pointer; background:transparent; color:var(--muted); transition:all 0.2s;
+}
+.nav-pill:hover  { background:#E0F7F6; color:var(--sky); border-color:var(--sky); }
+.nav-pill.active { background:var(--sky); color:white; border-color:var(--sky); }
+
+/* HERO */
+.hero {
+  position:relative; z-index:1;
+  padding:4rem 2rem 2.5rem; max-width:900px; margin:0 auto; text-align:center;
+}
+.floaties { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+.floaty { position:absolute; font-size:2rem; opacity:0.5; animation:float 4s ease-in-out infinite; }
+.floaty:nth-child(1){ top:8%;  left:4%;  animation-delay:0s; }
+.floaty:nth-child(2){ top:14%; right:5%; animation-delay:0.7s; }
+.floaty:nth-child(3){ top:58%; left:2%;  animation-delay:1.3s; }
+.floaty:nth-child(4){ top:52%; right:3%; animation-delay:0.4s; }
+.floaty:nth-child(5){ top:78%; left:6%;  animation-delay:1.8s; }
+.floaty:nth-child(6){ top:72%; right:6%; animation-delay:1s; }
+@keyframes float { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-14px) rotate(4deg)} }
+
+.hero-badge {
+  display:inline-block; background:var(--sky); color:white;
+  font-weight:800; font-size:12px; border-radius:50px; padding:5px 18px;
+  margin-bottom:1.2rem; letter-spacing:0.06em; box-shadow:3px 3px 0 rgba(78,205,196,0.3);
+}
+.hero h1 { font-family:'Fredoka One',cursive; font-size:clamp(2.2rem,7vw,4rem); line-height:1.1; color:var(--dark); margin-bottom:0.6rem; }
+.hero h1 .c1 { color:var(--sky); } .hero h1 .c2 { color:var(--blue); }
+.hero p { font-size:1rem; color:var(--muted); max-width:520px; margin:0 auto 2rem; line-height:1.7; }
+.hero-pills { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.hero-pill { background:var(--white); border-radius:50px; padding:8px 18px; font-size:13px; font-weight:700; border:2.5px solid; box-shadow:3px 3px 0 rgba(0,0,0,0.07); }
+.hp1{border-color:var(--sky);color:var(--sky)} .hp2{border-color:var(--purple);color:var(--purple)} .hp3{border-color:var(--mint);color:var(--mint)}
+
+/* SCHOOL SCENE */
+.school-wrap { max-width:860px; margin:0 auto; padding:0 1.5rem; position:relative; z-index:1; }
+.school-card {
+  background:var(--white); border-radius:28px; border:3px solid var(--sky);
+  padding:1.5rem 1.5rem 1rem; box-shadow:6px 6px 0 rgba(78,205,196,0.2);
+  position:relative; overflow:hidden;
+}
+.school-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:6px;
+  background:linear-gradient(90deg,var(--sky),var(--blue),var(--purple),var(--mint),var(--sky));
+}
+.school-hint { text-align:center; font-size:13px; font-weight:700; color:var(--muted); margin-bottom:1rem; }
+
+/* SECTIONS */
+section { max-width:900px; margin:0 auto; padding:3rem 1.5rem; scroll-margin-top:68px; position:relative; z-index:1; }
+.s-chip { display:inline-block; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; padding:4px 14px; border-radius:50px; margin-bottom:0.6rem; }
+.ch-sky  { background:#E0F7F6; color:#2A9490; }
+.ch-blue { background:#E8F4FF; color:#2980B9; }
+.ch-mint { background:#E0F8E4; color:#3A9E47; }
+.s-title { font-family:'Fredoka One',cursive; font-size:2rem; color:var(--dark); margin-bottom:1.8rem; }
+
+/* CARDS */
+.cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; }
+.comp-card {
+  background:var(--white); border-radius:22px; border:3px solid transparent;
+  padding:1.4rem; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s;
+}
+.comp-card:hover { transform:translateY(-4px) rotate(-0.5deg); }
+.comp-card.active { transform:translateY(-2px); }
+.cc1{border-color:var(--sky);   box-shadow:5px 5px 0 rgba(78,205,196,0.18)}
+.cc2{border-color:var(--blue);  box-shadow:5px 5px 0 rgba(116,185,255,0.18)}
+.cc3{border-color:var(--mint);  box-shadow:5px 5px 0 rgba(107,203,119,0.18)}
+.cc4{border-color:var(--red);   box-shadow:5px 5px 0 rgba(255,107,107,0.18)}
+.cc5{border-color:var(--purple);box-shadow:5px 5px 0 rgba(162,155,254,0.18)}
+.cc6{border-color:var(--orange);box-shadow:5px 5px 0 rgba(255,159,67,0.18)}
+.cc7{border-color:var(--yellow);box-shadow:5px 5px 0 rgba(255,217,61,0.22)}
+.cc8{border-color:var(--pink);  box-shadow:5px 5px 0 rgba(255,107,157,0.18)}
+.cc1.active{background:#F0FFFE} .cc2.active{background:#E8F4FF} .cc3.active{background:#F0FBF1}
+.cc4.active{background:#FFF0F0} .cc5.active{background:#F4F2FF} .cc6.active{background:#FFF5EC}
+.cc7.active{background:#FFFBEA} .cc8.active{background:#FFF0F6}
+
+.card-icon  { font-size:2.4rem; margin-bottom:0.7rem; display:block; }
+.card-title { font-family:'Fredoka One',cursive; font-size:1.15rem; color:var(--dark); margin-bottom:2px; }
+.card-sub   { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.6rem; }
+.cs1{color:var(--sky)} .cs2{color:var(--blue)} .cs3{color:var(--mint)} .cs4{color:var(--red)}
+.cs5{color:var(--purple)} .cs6{color:var(--orange)} .cs7{color:#C9A800} .cs8{color:var(--pink)}
+.card-desc { font-size:13.5px; color:var(--muted); line-height:1.55; }
+
+/* DETAIL PANEL */
+.detail-panel {
+  display:none; margin-top:1.2rem; background:var(--white);
+  border-radius:24px; border:3px solid var(--sky); padding:2rem;
+  animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+  box-shadow:6px 6px 0 rgba(78,205,196,0.15);
+}
+.detail-panel.visible { display:block; }
+@keyframes popIn { from{opacity:0;transform:scale(0.95) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.d-header { display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; padding-bottom:1.2rem; border-bottom:2px dashed var(--sky); }
+.d-icon { font-size:3rem; }
+.d-name { font-family:'Fredoka One',cursive; font-size:1.5rem; color:var(--dark); }
+.d-eng  { font-size:13px; font-weight:700; color:var(--sky); }
+.d-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; }
+@media(max-width:600px){ .d-grid{grid-template-columns:1fr} }
+.d-label { font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:0.5rem; }
+
+.analogy-box {
+  background:linear-gradient(135deg,#E0F7F6,#E8F4FF);
+  border:2px solid var(--sky); border-radius:16px; padding:1.2rem 1.1rem;
+  font-size:14px; line-height:1.7; color:var(--text); position:relative; margin-top:1.2rem;
+}
+.analogy-box::before { content:'🏫'; position:absolute; top:-13px; left:12px; font-size:1.4rem; }
+.why-box {
+  background:linear-gradient(135deg,#F0FBF1,#E0F7F6);
+  border:2px solid var(--mint); border-radius:16px; padding:1rem 1.1rem;
+  font-size:14px; line-height:1.7; color:var(--text); margin-top:0.4rem;
+}
+.q-box {
+  background:linear-gradient(135deg,#F4F2FF,#E0F7F6);
+  border:2px solid var(--purple); border-radius:16px; padding:1rem 1.1rem;
+  font-size:14px; line-height:1.7; color:var(--text); margin-top:1rem;
+}
+.tags-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:1rem; }
+.tag { font-size:12px; font-weight:700; padding:4px 12px; border-radius:50px; background:#E0F7F6; color:var(--sky); border:2px solid #9AE6E3; }
+
+/* QUIZ */
+.quiz-outer {
+  background:linear-gradient(135deg,#4ECDC4 0%,#2980B9 100%);
+  border-radius:28px; padding:2.5rem; box-shadow:8px 8px 0 rgba(78,205,196,0.25);
+  position:relative; overflow:hidden;
+}
+.quiz-outer::after { content:'🌐'; position:absolute; top:1.2rem; right:1.5rem; font-size:2.2rem; opacity:0.3; animation:float 3s ease-in-out infinite; }
+.quiz-outer .s-chip { background:rgba(255,255,255,0.2); color:white; }
+.quiz-outer .s-title { color:white; }
+.quiz-q { font-size:1.05rem; font-weight:700; color:white; line-height:1.6; margin-bottom:1.4rem; background:rgba(255,255,255,0.1); border-radius:16px; padding:1rem 1.2rem; }
+.quiz-opts { display:grid; gap:10px; }
+.quiz-opt {
+  background:rgba(255,255,255,0.12); border:2.5px solid rgba(255,255,255,0.25);
+  border-radius:14px; padding:0.9rem 1.2rem; cursor:pointer;
+  font-size:14px; font-weight:600; color:white; transition:all 0.18s;
+  text-align:left; font-family:'Nunito',sans-serif;
+}
+.quiz-opt:hover  { background:rgba(255,255,255,0.22); border-color:var(--yellow); transform:translateX(4px); }
+.quiz-opt.correct{ background:rgba(107,203,119,0.3); border-color:var(--mint); }
+.quiz-opt.wrong  { background:rgba(255,107,107,0.3); border-color:var(--red); }
+.quiz-fb { display:none; margin-top:1rem; border-radius:14px; padding:0.9rem 1.2rem; font-size:14px; font-weight:600; line-height:1.6; }
+.quiz-fb.show { display:block; }
+.quiz-fb.good { background:rgba(107,203,119,0.2); border:2px solid var(--mint); color:#C8FFD4; }
+.quiz-fb.bad  { background:rgba(255,107,107,0.2); border:2px solid var(--red);  color:#FFD6D6; }
+.quiz-nav { display:flex; align-items:center; justify-content:space-between; margin-top:1.4rem; }
+.quiz-prog{ font-size:13px; font-weight:700; color:rgba(255,255,255,0.5); }
+.btn {
+  background:var(--yellow); color:var(--dark); border:none; border-radius:50px;
+  padding:0.65rem 1.6rem; font-size:14px; font-weight:800; cursor:pointer;
+  font-family:'Nunito',sans-serif; transition:transform 0.15s, box-shadow 0.15s;
+  box-shadow:3px 3px 0 rgba(0,0,0,0.15);
+}
+.btn:hover    { transform:translateY(-2px); box-shadow:4px 5px 0 rgba(0,0,0,0.15); }
+.btn:disabled { opacity:0.35; cursor:default; transform:none; }
+.done-inner { text-align:center; padding:1rem 0; }
+.done-emoji { font-size:4rem; margin-bottom:0.8rem; display:block; animation:float 2s ease-in-out infinite; }
+.done-inner h3 { font-family:'Fredoka One',cursive; font-size:1.8rem; color:white; margin-bottom:0.4rem; }
+.done-inner p  { color:rgba(255,255,255,0.7); font-size:14px; font-weight:600; margin-bottom:1.5rem; }
+
+/* TABLE */
+.resumen-wrap { background:var(--white); border-radius:24px; overflow:hidden; border:3px solid var(--sky); box-shadow:6px 6px 0 rgba(78,205,196,0.18); }
+.resumen-table { width:100%; border-collapse:collapse; font-size:14px; }
+.resumen-table thead tr { background:linear-gradient(90deg,var(--sky),var(--blue)); }
+.resumen-table th { text-align:left; padding:12px 16px; color:white; font-weight:800; font-size:12px; text-transform:uppercase; letter-spacing:0.08em; }
+.resumen-table td { padding:12px 16px; border-bottom:2px dashed #E0F7F6; vertical-align:top; }
+.resumen-table tr:last-child td { border-bottom:none; }
+.resumen-table tr:nth-child(even) td { background:#F5FFFE; }
+.en { display:inline-block; font-family:monospace; font-size:12px; background:#E0F7F6; color:var(--sky); border-radius:6px; padding:2px 7px; font-weight:700; }
+
+/* NAV BOTTOM */
+.nav-bloques {
+  max-width:900px; margin:0 auto; padding:0 1.5rem 3rem;
+  display:flex; gap:14px; justify-content:center; flex-wrap:wrap; position:relative; z-index:1;
+}
+.nav-bloque-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:0.7rem 1.6rem; border-radius:50px; font-size:14px; font-weight:800;
+  font-family:'Nunito',sans-serif; text-decoration:none; transition:transform 0.15s, box-shadow 0.15s;
+  box-shadow:3px 3px 0 rgba(0,0,0,0.1); border:none; cursor:pointer;
+}
+.nav-bloque-btn:hover { transform:translateY(-2px); }
+.btn-prev { background:var(--white); color:var(--dark); border:2.5px solid var(--sky); }
+.btn-next { background:var(--purple); color:white; box-shadow:3px 3px 0 rgba(162,155,254,0.35); }
+
+footer {
+  position:relative; z-index:1; text-align:center; padding:2.5rem 1.5rem;
+  background:var(--dark); color:rgba(255,255,255,0.5); font-size:13px; font-weight:600;
+}
+footer span { color:var(--sky); }
+
+@media(max-width:640px){ .nav-pills{display:none} .hero{padding:3rem 1.2rem 2rem} section{padding:2rem 1.2rem} }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">🌐 Pandix — La Cocina Digital</span>
+  <div class="nav-pills">
+    <button class="nav-pill active" data-section="escuela"     onclick="goTo('escuela')">🏫 La escuela</button>
+    <button class="nav-pill"        data-section="componentes" onclick="goTo('componentes')">🧩 Componentes</button>
+    <button class="nav-pill"        data-section="quiz"        onclick="goTo('quiz')">⭐ Practica</button>
+    <button class="nav-pill"        data-section="resumen"     onclick="goTo('resumen')">📋 Resumen</button>
+  </div>
+  <a class="nav-back" href="index.html">← Inicio</a>
+</nav>
+
+<div class="hero">
+  <div class="floaties">
+    <span class="floaty">🏫</span><span class="floaty">📡</span>
+    <span class="floaty">🌐</span><span class="floaty">📶</span>
+    <span class="floaty">🔌</span><span class="floaty">⭐</span>
+  </div>
+  <div class="hero-badge">🌐 Bloque 2 de 3</div>
+  <h1>Las computadoras<br>son una <span class="c1">escuela</span> 🏫</h1>
+  <p>Redes, IPs, routers, switches y protocolos — explicados como los pasillos, salones y reglas de comunicación de una escuela primaria.</p>
+  <div class="hero-pills">
+    <span class="hero-pill hp1">🏫 8 conceptos</span>
+    <span class="hero-pill hp2">🧠 Analogía de escuela</span>
+    <span class="hero-pill hp3">✅ Quiz al final</span>
+  </div>
+</div>
+
+<!-- SCHOOL SCENE -->
+<div class="school-wrap" id="escuela">
+  <div class="school-card">
+    <p class="school-hint">👆 ¡Toca cada parte de la escuela para aprender más!</p>
+    <svg width="100%" viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg" style="display:block">
+
+      <!-- School building -->
+      <rect x="60" y="60" width="480" height="200" rx="10" fill="#E0F7F6"/>
+      <rect x="60" y="60" width="480" height="30" rx="10" fill="#4ECDC4"/>
+      <text x="300" y="82" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="14" fill="white">🏫 La Escuela (Red Local — LAN)</text>
+
+      <!-- Classrooms -->
+      <g onclick="showDetail('ip')" style="cursor:pointer">
+        <rect x="80" y="105" width="90" height="60" rx="8" fill="white" stroke="#4ECDC4" stroke-width="2"/>
+        <text x="125" y="130" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="11" fill="#2A9490">Salón 1</text>
+        <text x="125" y="147" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" font-weight="700" fill="#4ECDC4">192.168.1.1</text>
+        <text x="125" y="158" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" fill="#999">💻 PC</text>
+      </g>
+      <g onclick="showDetail('ip')" style="cursor:pointer">
+        <rect x="185" y="105" width="90" height="60" rx="8" fill="white" stroke="#4ECDC4" stroke-width="2"/>
+        <text x="230" y="130" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="11" fill="#2A9490">Salón 2</text>
+        <text x="230" y="147" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" font-weight="700" fill="#4ECDC4">192.168.1.2</text>
+        <text x="230" y="158" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" fill="#999">💻 PC</text>
+      </g>
+      <g onclick="showDetail('ip')" style="cursor:pointer">
+        <rect x="290" y="105" width="90" height="60" rx="8" fill="white" stroke="#4ECDC4" stroke-width="2"/>
+        <text x="335" y="130" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="11" fill="#2A9490">Salón 3</text>
+        <text x="335" y="147" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" font-weight="700" fill="#4ECDC4">192.168.1.3</text>
+        <text x="335" y="158" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" fill="#999">💻 PC</text>
+      </g>
+
+      <!-- Switch (prefect) -->
+      <g onclick="showDetail('switch')" style="cursor:pointer">
+        <rect x="170" y="190" width="120" height="38" rx="8" fill="#74B9FF"/>
+        <text x="230" y="213" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="12" fill="white">Switch 🔀</text>
+      </g>
+
+      <!-- Lines from classrooms to switch -->
+      <line x1="125" y1="165" x2="200" y2="190" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="4,3"/>
+      <line x1="230" y1="165" x2="230" y2="190" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="4,3"/>
+      <line x1="335" y1="165" x2="260" y2="190" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="4,3"/>
+
+      <!-- Firewall (door) -->
+      <g onclick="showDetail('firewall')" style="cursor:pointer">
+        <rect x="488" y="100" width="50" height="160" rx="6" fill="#FF6B6B"/>
+        <rect x="494" y="106" width="38" height="148" rx="4" fill="#FF4444"/>
+        <text x="513" y="160" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="10" fill="white">🔒</text>
+        <text x="513" y="175" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="9" fill="white">Fire</text>
+        <text x="513" y="187" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="9" fill="white">wall</text>
+      </g>
+
+      <!-- Router (director) -->
+      <g onclick="showDetail('router')" style="cursor:pointer">
+        <rect x="568" y="130" width="80" height="60" rx="10" fill="#FF9F43"/>
+        <text x="608" y="158" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="11" fill="white">Router</text>
+        <text x="608" y="173" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" font-weight="700" fill="white">El Director 👨‍💼</text>
+      </g>
+
+      <!-- Lines: switch to firewall, firewall to router -->
+      <line x1="290" y1="209" x2="488" y2="180" stroke="#74B9FF" stroke-width="2.5"/>
+      <line x1="538" y1="180" x2="568" y2="160" stroke="#FF9F43" stroke-width="2.5"/>
+
+      <!-- Internet cloud -->
+      <g onclick="showDetail('wan')" style="cursor:pointer">
+        <ellipse cx="700" cy="160" rx="70" ry="45" fill="#E8F4FF" stroke="#74B9FF" stroke-width="2.5" stroke-dasharray="6,4"/>
+        <text x="700" y="154" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="12" fill="#2980B9">🌐 Internet</text>
+        <text x="700" y="170" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" font-weight="700" fill="#2980B9">WAN</text>
+      </g>
+      <line x1="648" y1="160" x2="630" y2="160" stroke="#74B9FF" stroke-width="2.5"/>
+
+      <!-- DNS -->
+      <g onclick="showDetail('dns')" style="cursor:pointer">
+        <rect x="390" y="105" width="80" height="60" rx="8" fill="#A29BFE"/>
+        <text x="430" y="130" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="11" fill="white">DNS 📒</text>
+        <text x="430" y="148" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" font-weight="700" fill="rgba(255,255,255,0.8)">Directorio</text>
+        <text x="430" y="159" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="9" fill="rgba(255,255,255,0.7)">telefónico</text>
+      </g>
+      <line x1="380" y1="165" x2="360" y2="190" stroke="#A29BFE" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+      <!-- Labels -->
+      <text x="300" y="295" text-anchor="middle" font-family="'Fredoka One',cursive" font-size="12" fill="#AAA">LAN — la escuela</text>
+      <text x="300" y="312" text-anchor="middle" font-family="'Nunito',sans-serif" font-size="10" font-weight="700" fill="#CCC">✨ Toca cualquier elemento ✨</text>
+    </svg>
+  </div>
+</div>
+
+<!-- COMPONENTS -->
+<section id="componentes">
+  <div class="s-chip ch-sky">🧩 Los elementos de la red</div>
+  <div class="s-title">¿Qué hay en la escuela? 🔍</div>
+  <div class="cards-grid">
+    <div class="comp-card cc1" id="card-ip"       onclick="showDetail('ip')"><span class="card-icon">🏷️</span><div class="card-title">Dirección IP</div><div class="card-sub cs1">El número de salón</div><div class="card-desc">Cada computadora tiene su número único en la red, como cada salón en la escuela.</div></div>
+    <div class="comp-card cc2" id="card-router"   onclick="showDetail('router')"><span class="card-icon">👨‍💼</span><div class="card-title">Router</div><div class="card-sub cs2">El director</div><div class="card-desc">Decide a dónde va cada mensaje. Conecta tu red local con el internet.</div></div>
+    <div class="comp-card cc3" id="card-switch"   onclick="showDetail('switch')"><span class="card-icon">🔀</span><div class="card-title">Switch</div><div class="card-sub cs3">El prefecto</div><div class="card-desc">Distribuye mensajes dentro de la red local. No sale al internet.</div></div>
+    <div class="comp-card cc4" id="card-firewall" onclick="showDetail('firewall')"><span class="card-icon">🔒</span><div class="card-title">Firewall</div><div class="card-sub cs4">La puerta con guardia</div><div class="card-desc">Controla qué entra y qué sale. Protege la red con reglas.</div></div>
+    <div class="comp-card cc5" id="card-dns"      onclick="showDetail('dns')"><span class="card-icon">📒</span><div class="card-title">DNS</div><div class="card-sub cs5">El directorio</div><div class="card-desc">Convierte nombres como "google.com" en direcciones IP numéricas.</div></div>
+    <div class="comp-card cc6" id="card-protocolos" onclick="showDetail('protocolos')"><span class="card-icon">📜</span><div class="card-title">Protocolos</div><div class="card-sub cs6">Las reglas de comunicación</div><div class="card-desc">HTTP, HTTPS, SSH, TCP — el idioma que usan las computadoras para hablar.</div></div>
+    <div class="comp-card cc7" id="card-wan"      onclick="showDetail('wan')"><span class="card-icon">🌐</span><div class="card-title">LAN vs WAN</div><div class="card-sub cs7">Edificio vs mundo exterior</div><div class="card-desc">LAN es tu red local. WAN es el internet — la red de todas las redes.</div></div>
+    <div class="comp-card cc8" id="card-ssh"      onclick="showDetail('ssh')"><span class="card-icon">📞</span><div class="card-title">SSH</div><div class="card-sub cs8">El teléfono directo</div><div class="card-desc">Protocolo para conectarte de forma segura a otro servidor desde cualquier lugar.</div></div>
+  </div>
+  <div class="detail-panel" id="detail-panel"></div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="quiz-outer">
+    <div class="s-chip">🌟 Practica lo que aprendiste</div>
+    <div class="s-title">Mini quiz ✏️</div>
+    <div id="quiz-main">
+      <div class="quiz-q" id="quiz-q"></div>
+      <div class="quiz-opts" id="quiz-opts"></div>
+      <div class="quiz-fb"  id="quiz-fb"></div>
+      <div class="quiz-nav">
+        <span class="quiz-prog" id="quiz-prog"></span>
+        <button class="btn" id="quiz-next" onclick="nextQ()" disabled>Siguiente →</button>
+      </div>
+    </div>
+    <div id="quiz-done" style="display:none">
+      <div class="done-inner">
+        <span class="done-emoji">🌐</span>
+        <h3>¡Bloque 2 completado!</h3>
+        <p id="quiz-score-txt"></p>
+        <button class="btn" onclick="restartQuiz()">🔄 Repetir quiz</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="s-chip ch-mint">📋 Para no olvidar</div>
+  <div class="s-title">La escuela completa 🗺️</div>
+  <div class="resumen-wrap">
+    <table class="resumen-table">
+      <thead><tr><th>🧩 Componente</th><th>🏫 En la escuela</th><th>💡 Función clave</th><th>🇺🇸 En inglés</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Dirección IP</strong></td><td>Número de salón</td><td>Identifica cada dispositivo en la red</td><td><span class="en">IP Address</span></td></tr>
+        <tr><td><strong>Router</strong></td><td>El director</td><td>Conecta la red local con internet</td><td><span class="en">Router / Gateway</span></td></tr>
+        <tr><td><strong>Switch</strong></td><td>El prefecto</td><td>Distribuye mensajes dentro de la LAN</td><td><span class="en">Switch</span></td></tr>
+        <tr><td><strong>Firewall</strong></td><td>La puerta con guardia</td><td>Controla qué tráfico entra y sale</td><td><span class="en">Firewall</span></td></tr>
+        <tr><td><strong>DNS</strong></td><td>El directorio telefónico</td><td>Convierte nombres en IPs</td><td><span class="en">DNS</span></td></tr>
+        <tr><td><strong>HTTP / HTTPS</strong></td><td>El idioma oficial de la web</td><td>Protocolo para páginas web</td><td><span class="en">HTTP / HTTPS</span></td></tr>
+        <tr><td><strong>SSH</strong></td><td>Teléfono directo y seguro</td><td>Acceso remoto seguro a servidores</td><td><span class="en">SSH</span></td></tr>
+        <tr><td><strong>LAN / WAN</strong></td><td>Edificio / mundo exterior</td><td>Red local vs red amplia</td><td><span class="en">LAN / WAN</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- NAV BETWEEN BLOCKS -->
+<div class="nav-bloques">
+  <a class="nav-bloque-btn btn-prev" href="bloque1_cocina_computadora.html">← Bloque 1: La computadora</a>
+  <a class="nav-bloque-btn btn-next" href="index.html">Ver todos los bloques 🏠</a>
+</div>
+
+<footer>
+  <p>🌐 <span>Pandix — La Cocina Digital</span> · Bloque 2 de 3 · Hecho con 💛</p>
+  <p style="margin-top:0.4rem">Siguiente: <span>Bloque 3 — ¿Qué es la nube? ☁️</span></p>
+</footer>
+
+<script>
+const comps = {
+  ip:{icon:'🏷️',name:'Dirección IP',eng:'Internet Protocol Address',
+    analogy:'Cada salón de la escuela tiene un número. El salón 15, el 23, el 8. Sin ese número, ¿cómo sabrías a dónde entregar el recado? La IP es exactamente eso: el número de salón de cada computadora en la red.',
+    detail:'Tu IP privada (192.168.1.x) es tu número dentro del edificio. Tu IP pública es la dirección postal de toda la escuela — la que ve el mundo exterior. Todos los del mismo router comparten la misma IP pública.',
+    why:'En IT, cuando hay un problema de red, lo primero que preguntas es "¿cuál es tu IP?" — es como preguntar "¿en qué salón estás?"',
+    q:'¿Por qué tu teléfono y tu laptop tienen IPs distintas aunque estén en el mismo WiFi?',
+    tags:['IP','IPv4','IPv6','IP privada','IP pública','DHCP'],bc:'var(--sky)'},
+  router:{icon:'👨‍💼',name:'Router — El director',eng:'Router / Default Gateway',
+    analogy:'La directora de la escuela recibe todos los mensajes que vienen de afuera. Si el mensaje es para alguien del edificio, lo manda al prefecto. Si hay que contestar hacia afuera, ella es la que sale por la puerta principal.',
+    detail:'El router también reparte IPs automáticamente a todos los que se conectan — eso se llama DHCP. Cuando conectas tu teléfono al WiFi, es el router quien le dice "tu número aquí adentro es 192.168.1.5".',
+    why:'En IT, el router es el punto más crítico de la red. Si el router falla, nadie tiene internet. Es lo primero que reinician cuando "no hay conexión".',
+    q:'¿Cuántos routers hay en tu casa u oficina? ¿Sabes cuál es su IP? (Pista: generalmente es 192.168.1.1)',
+    tags:['Router','Gateway','DHCP','NAT','Default gateway'],bc:'var(--orange)'},
+  switch:{icon:'🔀',name:'Switch — El prefecto',eng:'Network Switch',
+    analogy:'El prefecto del edificio no sale a la calle — su trabajo es entregar mensajes dentro de la escuela. Si la computadora del salón 3 le manda un archivo a la del salón 7, el switch lo lleva sin que salga al internet.',
+    detail:'El switch es más inteligente que un simple cable compartido: sabe exactamente en qué puerto está cada computadora y manda el mensaje solo a quien lo necesita, no a todos al mismo tiempo.',
+    why:'En una empresa grande puede haber decenas de switches conectando cientos de computadoras. Entender dónde está cada switch es clave para diagnosticar problemas de red.',
+    q:'¿Qué diferencia hace que el switch sepa a dónde mandar cada mensaje en vez de mandarlo a todos?',
+    tags:['Switch','Puerto (port)','LAN','MAC address','Ethernet'],bc:'var(--blue)'},
+  firewall:{icon:'🔒',name:'Firewall — La puerta con guardia',eng:'Firewall',
+    analogy:'La entrada de la escuela tiene un guardia que revisa a todos los que entran y salen. Tiene una lista: "estos pueden pasar, estos no". No importa quién seas — si no estás en la lista o vienes de una dirección prohibida, no entras.',
+    detail:'El firewall trabaja con reglas: "bloquea todo lo que venga de esta IP", "solo deja pasar conexiones al puerto 443", "no permitas conexiones entrantes que nadie solicitó". Puede ser hardware o software.',
+    why:'En IT, configurar bien el firewall es una de las responsabilidades más importantes de seguridad. Un firewall mal configurado es como dejar la puerta de la escuela sin guardia.',
+    q:'¿Qué pasaría si el firewall bloqueara el puerto 443? ¿Podrías navegar en sitios HTTPS?',
+    tags:['Firewall','Puerto (port)','Regla (rule)','Tráfico','Seguridad','DMZ'],bc:'var(--red)'},
+  dns:{icon:'📒',name:'DNS — El directorio telefónico',eng:'Domain Name System',
+    analogy:'La escuela tiene un directorio con el nombre y número de salón de cada maestro. Buscas "Maestra García" y el directorio te dice "salón 12". Sin directorio tendrías que memorizar todos los números. El DNS hace eso con internet.',
+    detail:'Cuando escribes "netflix.com", tu computadora le pregunta al DNS: "¿cuál es la IP de netflix.com?" El DNS responde con algo como 54.73.245.12 y entonces sí puede conectarse.',
+    why:'En IT, cuando un sitio "no carga", muchas veces es un problema de DNS — la traducción falló. El comando nslookup te dice si el DNS está respondiendo correctamente.',
+    q:'¿Qué pasaría si el DNS del mundo dejara de funcionar? ¿Podrías seguir accediendo a sitios si conocieras sus IPs?',
+    tags:['DNS','Dominio (domain)','Resolución DNS','Servidor DNS','nslookup'],bc:'var(--purple)'},
+  protocolos:{icon:'📜',name:'Protocolos — Las reglas',eng:'Protocols: HTTP, HTTPS, TCP, UDP, SSH',
+    analogy:'En la escuela hay reglas de cómo comunicarse: si es urgente vas en persona, si es ordinario mandas un recado, si es secreto usas código. Los protocolos son esas reglas — definen el formato, el idioma y el nivel de seguridad de cada tipo de comunicación.',
+    detail:'HTTP/HTTPS = páginas web (HTTPS es la versión con candado y encriptación). TCP = entrega garantizada como carta con acuse. UDP = rápido pero sin confirmación, ideal para videollamadas. SSH = acceso remoto seguro a servidores.',
+    why:'En IT necesitas saber qué protocolo usa cada servicio para configurar firewalls, diagnosticar problemas y asegurar comunicaciones.',
+    q:'¿Por qué un videojuego en línea usa UDP en vez de TCP si UDP no garantiza que los datos lleguen?',
+    tags:['HTTP','HTTPS','TCP','UDP','SSH','FTP','Puerto (port)'],bc:'var(--orange)'},
+  wan:{icon:'🌐',name:'LAN vs WAN — Escuela vs mundo',eng:'Local Area Network / Wide Area Network',
+    analogy:'La LAN es tu edificio escolar — computadoras cercanas conectadas entre sí. La WAN es el mundo afuera — todas las escuelas del planeta conectadas. El internet es la WAN más grande que existe.',
+    detail:'WiFi es una forma de conectarse a la LAN sin cables. Ethernet (cable) es otra forma — más estable y rápida. En servidores casi siempre se usa Ethernet porque la estabilidad importa más que la comodidad.',
+    why:'Cuando en IT dicen "problema en la LAN" significa que es interno — busca en el switch. "Problema de WAN" significa que es externo — revisa el router o el proveedor de internet.',
+    q:'¿Tu casa tiene LAN? ¿Cuántos dispositivos están en esa LAN ahora mismo?',
+    tags:['LAN','WAN','WiFi','Ethernet','Ancho de banda','ISP'],bc:'var(--blue)'},
+  ssh:{icon:'📞',name:'SSH — El teléfono directo',eng:'Secure Shell',
+    analogy:'Imagina que puedes marcarle directamente al servidor como si fuera un teléfono, hablarle en comandos y que te obedezca — desde cualquier parte del mundo, sin estar físicamente ahí. Y la llamada va completamente encriptada para que nadie la escuche.',
+    detail:'SSH trabaja en el puerto 22. Cuando un ingeniero necesita administrar un servidor en otro país, abre la terminal, escribe "ssh usuario@192.168.1.50" y tiene control total del servidor remoto.',
+    why:'SSH es el pan de cada día en IT. Administrar servidores Linux remotamente es imposible sin él. Lo verás en todos los trabajos de infraestructura, redes y cloud.',
+    q:'¿Qué ventaja tiene SSH sobre entrar físicamente al servidor? ¿Se te ocurren dos razones?',
+    tags:['SSH','Puerto 22','Terminal','Servidor remoto','Encriptación','Clave pública'],bc:'var(--pink)'}
+};
+
+function showDetail(key){
+  document.querySelectorAll('.comp-card').forEach(c=>c.classList.remove('active'));
+  const card=document.getElementById('card-'+key); if(card) card.classList.add('active');
+  const d=comps[key], panel=document.getElementById('detail-panel');
+  panel.style.borderColor=d.bc; panel.style.boxShadow=`6px 6px 0 ${d.bc}33`;
+  panel.innerHTML=`
+    <div class="d-header">
+      <span class="d-icon">${d.icon}</span>
+      <div><div class="d-name">${d.name}</div><div class="d-eng">${d.eng}</div></div>
+    </div>
+    <div class="d-grid">
+      <div>
+        <div class="d-label">🏫 En la escuela</div>
+        <div class="analogy-box">${d.analogy}</div>
+        <div style="margin-top:1rem"><div class="d-label">💡 Un poco más</div>
+        <p style="font-size:14px;line-height:1.7;margin-top:0.4rem;color:var(--text)">${d.detail}</p></div>
+      </div>
+      <div>
+        <div class="d-label">🏢 ¿Por qué importa en IT?</div>
+        <div class="why-box">${d.why}</div>
+        <div class="q-box">🤔 <strong>Para reflexionar:</strong> ${d.q}</div>
+        <div class="tags-row">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`;
+  panel.classList.add('visible');
+  setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+// QUIZ
+const qData=[
+  {q:'Escribes "instagram.com" en el navegador. ¿Qué componente de red trabaja primero para que la página cargue?',
+   opts:['El router','El switch','El DNS','El firewall'],c:2,
+   good:'¡Exacto! 🎉 El DNS traduce "instagram.com" a una IP numérica antes de que pueda conectarse.',
+   bad:'Primero actúa el DNS — convierte el nombre en una IP. Sin esa traducción, la computadora no sabe a dónde ir.'},
+  {q:'¿Cuál es la diferencia principal entre un router y un switch?',
+   opts:['El router es más rápido','El router conecta con internet, el switch solo distribuye mensajes internos','El switch es más caro','No hay diferencia, son lo mismo'],c:1,
+   good:'¡Perfecto! 🌐 El director (router) mira hacia afuera. El prefecto (switch) solo trabaja adentro del edificio.',
+   bad:'El router = director: conecta con el exterior. El switch = prefecto: solo distribuye mensajes dentro de la red local.'},
+  {q:'Una empresa no puede recibir conexiones desde internet. ¿Qué revisarías primero?',
+   opts:['El switch','El DNS','El firewall','La dirección IP'],c:2,
+   good:'¡Correcto! 🔒 El firewall es la puerta con guardia — si bloqueó las conexiones entrantes, nadie puede entrar.',
+   bad:'El firewall es la puerta con guardia. Si está bloqueando conexiones entrantes, es lo primero que hay que revisar.'},
+  {q:'¿Por qué los sitios de bancos usan HTTPS y no HTTP?',
+   opts:['Porque HTTPS es más rápido','Porque HTTPS encripta la comunicación y protege tus datos','Porque HTTP ya no existe','Porque el banco lo exige por moda'],c:1,
+   good:'¡Exacto! 🔐 HTTPS encripta todo — nadie puede interceptar tus datos aunque vea el tráfico de red.',
+   bad:'HTTPS encripta la comunicación. Sin eso, cualquiera en la misma red podría ver tu contraseña del banco.'},
+  {q:'Un ingeniero necesita administrar un servidor que está físicamente en otro país. ¿Qué protocolo usa?',
+   opts:['HTTP','DNS','SSH','FTP'],c:2,
+   good:'¡Perfecto! 📞 SSH es el teléfono directo y seguro para hablarle a cualquier servidor desde cualquier lugar del mundo.',
+   bad:'SSH es el protocolo para acceso remoto seguro. Es lo que usan los ingenieros IT para administrar servidores sin estar físicamente ahí.'}
+];
+let cQ=0,score=0,answered=false;
+function loadQ(){
+  const q=qData[cQ];
+  document.getElementById('quiz-q').textContent=q.q;
+  document.getElementById('quiz-prog').textContent=`Pregunta ${cQ+1} de ${qData.length}`;
+  const fb=document.getElementById('quiz-fb'); fb.className='quiz-fb'; fb.textContent='';
+  document.getElementById('quiz-next').disabled=true; answered=false;
+  const opts=document.getElementById('quiz-opts'); opts.innerHTML='';
+  q.opts.forEach((o,i)=>{const b=document.createElement('button');b.className='quiz-opt';b.textContent=o;b.onclick=()=>answer(i);opts.appendChild(b);});
+}
+function answer(idx){
+  if(answered)return; answered=true;
+  const q=qData[cQ],btns=document.querySelectorAll('.quiz-opt');
+  btns[idx].classList.add(idx===q.c?'correct':'wrong');
+  if(idx!==q.c)btns[q.c].classList.add('correct');
+  const fb=document.getElementById('quiz-fb');
+  if(idx===q.c){score++;fb.textContent=q.good;fb.className='quiz-fb show good';}
+  else{fb.textContent=q.bad;fb.className='quiz-fb show bad';}
+  document.getElementById('quiz-next').disabled=false;
+}
+function nextQ(){
+  cQ++;
+  if(cQ>=qData.length){
+    document.getElementById('quiz-main').style.display='none';
+    document.getElementById('quiz-done').style.display='block';
+    document.getElementById('quiz-score-txt').textContent=`Respondiste ${score} de ${qData.length} correctamente 🌟`;
+  }else loadQ();
+}
+function restartQuiz(){cQ=0;score=0;document.getElementById('quiz-main').style.display='block';document.getElementById('quiz-done').style.display='none';loadQ();}
+
+// NAV
+function goTo(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});setActive(id);}
+function setActive(id){document.querySelectorAll('.nav-pill').forEach(p=>p.classList.remove('active'));const m=[...document.querySelectorAll('.nav-pill')].find(p=>p.dataset.section===id);if(m)m.classList.add('active');}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)setActive(e.target.id);});},{threshold:0.3,rootMargin:'-60px 0px -40% 0px'});
+['escuela','componentes','quiz','resumen'].forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+loadQ();
+</script>
+</body>
+</html>
